@@ -3,7 +3,7 @@ const env = process.env;
 
 const development = {
     username: env.SEQUELIZE_DEV_USERNAME || 'root',
-    password: env.SEQUELIZE_DEV_PASSWORD || '3d720307',
+    password: env.SEQUELIZE_DEV_PASSWORD || '0000',
     database: env.SEQUELIZE_DEV_DATABASE || '7shop',
     host: env.SEQUELIZE_DEV_HOST || '127.0.0.1',
     dialect: env.SEQUELIZE_DEV_DIALECT || 'mysql',
