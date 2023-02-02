@@ -26,7 +26,7 @@ class UserService {
     checkAlreadyCancel = async ({ impUid }) => {
         const payment = await this.paymentRepository.checkAlreadyCancel({ impUid })
         if (payment) {
-            return { errorMessage: "이미 취소된 결제입니다" }
+            return { errorMessage: "이미 취소된 결제입니다!" }
         }
     }
 
