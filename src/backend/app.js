@@ -5,9 +5,9 @@ const path = require('path')
 
 const port = 3000
 const app = express()
-const adminRoutes = require('./routers/admin.routers');
-const productRoutes = require('/routers/product.routers');
-const userRoutes = require('/routers/user.routers')
+const adminRoutes = require('./routers/admin.routers.js');
+const productRoutes = require('./routers/product.routers.js');
+const userRoutes = require('./routers/user.routers.js')
 
 app.use(cookieParser())
 app.use(express.json());
@@ -15,10 +15,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../frontend/view'))); // 정적파일, 이미지파일
 app.use(express.static(path.join(__dirname, '../frontend/public'))); // 정적파일, 이미지파일
 
+app.use('/', [adminRoutes, productRoutes, userRoutes])
 
 
 sequelize
-    .sync({ force: true })
+    .sync({ force: false })
     .then(() => {
         console.log('데이터베이스 연결 성공!');
     })
