@@ -1,10 +1,20 @@
-const { Users } = require('../db')
+const { Address } = require('../db')
 const UserService = require('../services/user.service')
 class UserController {
     constructor(userController) {
         this.userController = userController
     }
-    userService = new UserService(Users)
+    postService = new UserService(Address)
+
+    postAddress = async (req, res, next) => {
+        try {
+            const { addressName } = req.body
+            const address = await this.postService.postAddress(addressName)
+            return res.json({ message: '주소 등록이 완료되었습니다', address: address.name })
+        } catch (error) {
+            return res.json({ errorMessage: error })
+        }
+    }
 }
 
 module.exports = UserController
