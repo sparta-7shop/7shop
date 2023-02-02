@@ -1,11 +1,11 @@
 const AdminRepository = require('../repositories/admin.repository');
-const adminModel = require('../db/admin.model')
+const { Admin } = require('../db/index')
 
 class AdminService {
     constructor(adminService) {
         this.adminService = adminService
     }
-    adminRepository = new AdminRepository(adminModel)
+    adminRepository = new AdminRepository(Admin)
 
     deleteUser = async (userId) => {
         // delete 로직

@@ -1,15 +1,15 @@
-const adminModel = require('../db/admin.model.js')
-
 class AdminRepository {
-    // constructor(adminModel) {
-    //     this.adminModel = adminModel
-    // }
-    // adminModel = new AdminRepository(adminModel)
-
+    constructor(adminModel) {
+        this.adminModel = adminModel
+    }
     deleteUser = async (userId) => {
-        const deleteUser = await adminModel.findByPk(userId)
-        console.log('deleteUser', deleteUser)
-        return deleteUser
+        try {
+            const deleteUser = await this.adminModel.findAll({ where: { id: userId } })
+            console.log('deleteUser', deleteUser)
+            return deleteUser
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
 module.exports = AdminRepository
