@@ -5,10 +5,11 @@ const path = require('path')
 
 const port = 3000
 const app = express()
-const adminRoutes = require('./routers/admin.routers');
-const productRoutes = require('/routers/product.routers');
-const userRoutes = require('/routers/user.routers')
+const adminRoutes = require('./routers/admin.routers.js');
+const productRoutes = require('./routers/product.routers.js');
+const userRoutes = require('./routers/user.routers.js')
 
+app.use('/', [adminRoutes, productRoutes, userRoutes])
 app.use(cookieParser())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
