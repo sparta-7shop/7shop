@@ -1,6 +1,8 @@
 const express = require('express');
 
-// const userController = require('../controllers/user');
+const UserController = require('../controllers/user.controller');
+const { Users } = require('../db')
+const userController = new UserController(Users)
 
 const router = express.Router();
 
@@ -12,7 +14,9 @@ const router = express.Router();
 // router.post('/users/logout', userController.###;
 //
 // //장바구니 불러오기
-// router.get('/users/cart', userController.###);
+// # 현재 # req.params로 받아옴, 후에 로그인 구현되면 파라미터로 받아오는거 없애고
+//다시 받아넣어야함~
+router.get('/users/cart/:userId', userController.getCart);
 // //장바구니 삭제
 // router.post('/users/cart/:productId', userController.###);
 // //장바구니 주문
