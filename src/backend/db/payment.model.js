@@ -31,7 +31,9 @@ module.exports = (sequelize, DataTypes) => {
         {
             sequelize,
             modelName: 'Payments',
-            timestamps: true
+            timestamps: true,
+            paranoid: true,
+            deletedAt: 'destroyTime'
         }
     );
     return Payments;

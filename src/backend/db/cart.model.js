@@ -32,7 +32,9 @@ module.exports = (sequelize, DataTypes) => {
         {
             sequelize,
             modelName: 'Carts',
-            timestamps: true
+            timestamps: true,
+            paranoid: true,
+            deletedAt: 'destroyTime'
         }
     );
     return Carts;
