@@ -11,7 +11,7 @@ class UserController {
             const { addressName } = req.body
             const userId = 1
             const address = await this.postService.postAddress(addressName, userId)
-            return res.json({ message: '주소 등록이 완료되었습니다', address: address.name })
+            return res.json({ message: '주소 등록이 완료되었습니다!', address: address.name })
         } catch (error) {
             return res.json({ errorMessage: error })
         }
