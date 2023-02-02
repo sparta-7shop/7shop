@@ -6,8 +6,8 @@ class UserService {
     }
     addressRepository = new UserRepository(Address)
 
-    postAddress = async (addressName) => {
-        return await this.addressRepository.postAddress(addressName)
+    postAddress = async (addressName, userId) => {
+        return await this.addressRepository.postAddress(addressName, userId)
     }
 }
 

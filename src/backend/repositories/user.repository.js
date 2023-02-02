@@ -3,8 +3,8 @@ class UserRepository {
         this.userRepository = userRepository
     }
 
-    postAddress = async (addressName) => {
-        const address = await this.userRepository.create({ name: addressName, user_id: 1 })
+    postAddress = async (addressName, userId) => {
+        const address = await this.userRepository.create({ name: addressName, user_id: userId })
         return address
     }
 }
