@@ -12,10 +12,17 @@ const userRoutes = require('./routers/user.routers.js')
 app.use(cookieParser())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '../frontend/view'))); // 정적파일, 이미지파일
+app.use(express.static(path.join(__dirname, '../frontend/views'))); // 정적파일, 이미지파일
 app.use(express.static(path.join(__dirname, '../frontend/public'))); // 정적파일, 이미지파일
 
 app.use('/', [adminRoutes, productRoutes, userRoutes])
+app.engine('html', require('ejs').renderFile)
+app.set('view engine', 'html');
+app.set('views', path.join(__dirname, '../frontend/views'))
+
+app.get('/', (req, res) => {
+    res.render('payment.html')
+})
 
 
 sequelize

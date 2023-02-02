@@ -25,11 +25,12 @@ const router = express.Router();
 // router.post('/users/cart/order', userController.###);
 
 //결제
-// router.post('/users/payments', paymentController.###);
-// //결제 취소
-// router.post('/users/payments/cancel', userController.###);
+router.post('/users/payment', paymentController.payment)
+//결제 취소
+router.post('/users/payment/cancel', paymentController.cancelPayment)
 //주소 입력
 router.post('/users/address', addressController.postAddress);
+//주소 불러오기
 
 
 
