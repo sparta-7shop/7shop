@@ -31,6 +31,7 @@ router.post('/users/payment/cancel', paymentController.cancelPayment)
 //주소 입력
 router.post('/users/address', addressController.postAddress);
 //주소 불러오기
+router.get('/users/address/:userId', addressController.getAddress)
 
 
 

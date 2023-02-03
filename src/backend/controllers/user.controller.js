@@ -5,7 +5,7 @@ class UserController {
     constructor(userController) {
         this.userController = userController
     }
-    postService = new UserService(Address)
+    addressService = new UserService(Address)
     paymentService = new UserService(Payments)
     iamportService = new IamportService()
 
@@ -13,8 +13,18 @@ class UserController {
         try {
             const { addressName } = req.body
             const userId = 1
-            const address = await this.postService.postAddress(addressName, userId)
+            const address = await this.addressService.postAddress(addressName, userId)
             return res.json({ message: '주소 등록이 완료되었습니다!', address: address.name })
+        } catch (error) {
+            return res.json({ errorMessage: error })
+        }
+    }
+
+    getAddress = async (req, res, next) => {
+        const { userId } = req.params
+        try {
+            const address = await this.addressService.getAddress({ userId })
+            return res.json({ address })
         } catch (error) {
             return res.json({ errorMessage: error })
         }

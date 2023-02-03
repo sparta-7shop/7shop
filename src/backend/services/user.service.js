@@ -11,6 +11,11 @@ class UserService {
         return await this.addressRepository.postAddress(addressName, userId)
     }
 
+    getAddress = async ({ userId }) => {
+        const address = await this.addressRepository.getAddress({ userId })
+        return address
+    }
+
     payment = async ({ impUid, amount }) => {
         return await this.paymentRepository.payment({ impUid, amount })
     }

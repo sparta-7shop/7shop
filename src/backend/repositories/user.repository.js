@@ -8,6 +8,13 @@ class UserRepository {
         return address
     }
 
+    getAddress = async ({ userId }) => {
+        const address = await this.userRepository.findAll({
+            where: { user_id: userId }
+        })
+        return address
+    }
+
     payment = async ({ impUid, amount }) => {
         await this.userRepository.create({
             total_price: amount,
