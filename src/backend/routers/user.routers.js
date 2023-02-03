@@ -1,6 +1,9 @@
 const express = require('express');
 
-// const userController = require('../controllers/user');
+const UserController = require('../controllers/user.controller');
+const { Users, Address, Payments } = require('../db')
+const addressController = new UserController(Address)
+const paymentController = new UserController(Payments)
 
 const router = express.Router();
 
@@ -10,6 +13,8 @@ const router = express.Router();
 // router.post('/users/login', userController.###);
 // //유저 로그아웃
 // router.post('/users/logout', userController.###;
+// //마이페이지
+// router.post('/users/mypage', userController.###);
 
 
 // //장바구니 불러오기
@@ -19,14 +24,14 @@ const router = express.Router();
 // //장바구니 주문
 // router.post('/users/cart/order', userController.###);
 
-// //결제
-// router.post('/users/payments', userController.###);
-// //결제 취소
-// router.post('/users/payments/cancel', userController.###);
-// //마이페이지
-// router.post('/users/mypage', userController.###);
-// //주소 입력
-// router.post('/users/address', userController.###);
+//결제
+router.post('/users/payment', paymentController.payment)
+//결제 취소
+router.post('/users/payment/cancel', paymentController.cancelPayment)
+//주소 입력
+router.post('/users/address', addressController.postAddress);
+//주소 불러오기
+router.get('/users/address/:userId', addressController.getAddress)
 
 
 
