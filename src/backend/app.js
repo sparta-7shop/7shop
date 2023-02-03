@@ -8,7 +8,7 @@ const app = express()
 const adminRoutes = require('./routers/admin.routers.js');
 const productRoutes = require('./routers/product.routers.js');
 const userRoutes = require('./routers/user.routers.js')
-
+//머지 테스트
 app.set('view engine', 'html');
 
 app.use(cookieParser())
