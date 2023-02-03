@@ -8,8 +8,8 @@ class UserRepository {
     }
     getCartItem = async (userId) => {
         try {
-          return await this.userModel.findOne({
-              where: {id: userId}
+          return await this.userModel.findAll({
+              where: {user_id: userId}
             })
         }catch (error){
             console.log(error);
@@ -31,12 +31,11 @@ class UserRepository {
     }
     updateCartItemQuantity = async (userId,prodId,count) => {
       try{
-        const updateItemQuantity = await this.userModel.update({
+        return await this.userModel.update({
           count
-        },{
+        }, {
           where: {user_id: userId, product_id: prodId}
         })
-        return updateItemQuantity
       } catch (error) {
         console.log(error)
       }
@@ -56,8 +55,6 @@ class UserRepository {
             console.log(error);
         }
     }
-
-
 }
 
 module.exports = UserRepository

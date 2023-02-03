@@ -1,5 +1,5 @@
 const ProductService = require('../services/product.service')
-const { Products, Carts} = require('../db')
+const { Products, Carts } = require('../db')
 const UserService = require("../services/user.service");
 class ProductController {
     constructor(productController) {

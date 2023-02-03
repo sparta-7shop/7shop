@@ -24,7 +24,6 @@ router.post('/users/cart/:userId',userController.addCartItem);
 router.post('/users/cart/detail/:userId', userController.deleteCartItem);
 // //장바구니 수량 수정 (추가)
 router.post('/users/cart/detail/:userId/:prodId', userController.updateCartItemQuantity)
-
 // //장바구니 주문(사라짐)
 // router.post('/users/cart/order/:userId', productController.cartToOrder);
 

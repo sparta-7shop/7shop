@@ -7,12 +7,9 @@ class ProductService {
         this.productService = productService
     }
     productRepository = new ProductRepository(Products)
-
     getProducts = async () => {
-        const products = await this.productRepository.getProducts()
-        return products
+        return await this.productRepository.getProducts()
     }
-
 }
 
 module.exports = ProductService

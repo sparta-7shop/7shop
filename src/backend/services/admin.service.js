@@ -9,8 +9,7 @@ class AdminService {
 
     deleteUser = async (userId) => {
         // delete 로직
-        const deleteUser = await this.adminRepository.deleteUser(userId)
-        return deleteUser
+        return await this.adminRepository.deleteUser(userId)
     }
 }
 
