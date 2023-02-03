@@ -32,37 +32,42 @@ class UserController {
 
     payment = async (req, res, _next) => {
         const { impUid, amount } = req.body
-        // 1. 아임포트에 요청해서 결제 완료 기록 존재하는지 확인
-        const token = await this.iamportService.getToken()
-        const isCheckPaid = await this.iamportService.checkPaid({ impUid, amount, token })
-        if (isCheckPaid) { return res.json(isCheckPaid) }
+        try {
+            // 1. 아임포트에 요청해서 결제 완료 기록 존재하는지 확인
+            const token = await this.iamportService.getToken()
+            const isCheckPaid = await this.iamportService.checkPaid({ impUid, amount, token })
+            if (isCheckPaid) { return res.json(isCheckPaid) }
 
-        // 2. 중복 결제 체크
-        const isDuplicated = await this.paymentService.checkDuplicate({ impUid })
-        if (isDuplicated) { return res.json(isDuplicated) }
+            // 2. 중복 결제 체크
+            const isDuplicated = await this.paymentService.checkDuplicate({ impUid })
+            if (isDuplicated) { return res.json(isDuplicated) }
 
-        // 3. 결제
-        await this.paymentService.payment({ impUid, amount })
-        return res.json({ message: "결제 성공" })
+            // 3. 결제
+            await this.paymentService.payment({ impUid, amount })
+            return res.json({ message: "결제 성공" })
+        } catch (error) {
+            return res.json(500).json({ errorMessage: error.message })
+        }
     }
 
     cancelPayment = async (req, res, next) => {
         const { impUid } = req.body
-        // 1. 이미 취소된 건인지 확인
-        const isCancel = await this.paymentService.checkAlreadyCancel({ impUid })
-        if (isCancel) { return res.json(isCancel) }
-
-        // 2. 아임포트에 취소 요청하기
-        const token = await this.iamportService.getToken()
-        const canceledAmount = await this.iamportService.cancel({
-            impUid, token
-        })
-
-        // 3. 취소 전 status 업데이트
-        await this.paymentService.updateStatus({ impUid })
-
-        // 3. 취소
         try {
+            //  1. 존재하는 건인지 확인
+            const isExistPayment = await this.paymentService.checkDuplicate({ impUid })
+            if (!isExistPayment) { return res.json({ errorMesaage: '존재하지 않는 결제입니다.' }) }
+
+            // 1. 이미 취소된 건인지 확인
+            const isCancel = await this.paymentService.checkAlreadyCancel({ impUid })
+            if (isCancel) { return res.json(isCancel) }
+
+            // 2. 아임포트에 취소 요청하기
+            const token = await this.iamportService.getToken()
+            const canceledAmount = await this.iamportService.cancel({
+                impUid, token
+            })
+
+            // 3. 취소
             await this.paymentService.cancelPayment({
                 impUid,
             })
