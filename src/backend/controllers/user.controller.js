@@ -16,7 +16,7 @@ class UserController {
             const address = await this.addressService.postAddress(addressName, userId)
             return res.json({ message: '주소 등록이 완료되었습니다!', address: address.name })
         } catch (error) {
-            return res.status(500).json({ errorMessage: error.message })
+            return res.status(500).json({ errorMessage: error.errorMessage })
         }
     }
 
@@ -26,7 +26,7 @@ class UserController {
             const address = await this.addressService.getAddress({ userId })
             return res.json({ address })
         } catch (error) {
-            return res.status(500).json({ errorMessage: error.message })
+            return res.status(500).json({ errorMessage: error.errorMessage })
         }
     }
 
@@ -36,17 +36,17 @@ class UserController {
             // 1. 아임포트에 요청해서 결제 완료 기록 존재하는지 확인
             const token = await this.iamportService.getToken()
             const isCheckPaid = await this.iamportService.checkPaid({ impUid, amount, token })
-            if (isCheckPaid) { return res.json(isCheckPaid) }
+            if (isCheckPaid) { return res.status(500).json(isCheckPaid.errorMessage) }
 
             // 2. 중복 결제 체크
             const isDuplicated = await this.paymentService.checkDuplicate({ impUid })
-            if (isDuplicated) { return res.json(isDuplicated) }
+            if (isDuplicated) { return res.status(isDuplicated.code).json(isDuplicated.errorMessage) }
 
             // 3. 결제
             await this.paymentService.payment({ impUid, amount })
-            return res.json({ message: "결제 성공" })
+            return res.status(201).json({ message: "결제 성공" })
         } catch (error) {
-            return res.status(500).json({ errorMessage: error.message })
+            return res.status(500).json({ errorMessage: error.errorMessage })
         }
     }
 
@@ -55,7 +55,7 @@ class UserController {
         try {
             //  1. 존재하는 건인지 확인
             const isExistPayment = await this.paymentService.checkDuplicate({ impUid })
-            if (!isExistPayment) { return res.json({ errorMessage: '존재하지 않는 결제입니다.' }) }
+            if (isExistPayment) { return res.status(isExistPayment.code).json({ errorMessage: isExistPayment.errorMessage }) }
 
             // 2. 이미 취소된 건인지 확인
             const isCancel = await this.paymentService.checkAlreadyCancel({ impUid })
@@ -73,7 +73,7 @@ class UserController {
             })
             return res.json({ message: `${canceledAmount}원 취소 완료` })
         } catch (error) {
-            return res.status(500).json({ errorMessage: error.message })
+            return res.status(500).json({ errorMessage: error.errorMessage })
         }
     }
 }

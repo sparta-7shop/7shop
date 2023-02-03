@@ -32,7 +32,7 @@ class IamportService {
                 return { errorMessage: '결제 금액이 잘못됐네용' }
             }
         } catch (error) {
-            return { errorMessage: "에러에러" }
+            return { errorMessage: error }
         }
     }
 

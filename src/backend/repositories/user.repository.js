@@ -9,7 +9,7 @@ class UserRepository {
             const address = await this.userRepository.create({ name: addressName, user_id: userId })
             return address
         } catch (error) {
-            console.log(error);
+            return { errorMessage: error }
         }
     }
 
@@ -20,7 +20,7 @@ class UserRepository {
             })
             return address
         } catch (error) {
-            console.log(error);
+            return { errorMessage: error }
         }
     }
 
@@ -33,7 +33,7 @@ class UserRepository {
                 status: 1
             })
         } catch (error) {
-            console.log(error);
+            return { errorMessage: error }
         }
     }
 
@@ -44,7 +44,7 @@ class UserRepository {
                 paranoid: false
             })
         } catch (error) {
-            console.log(error);
+            return { errorMessage: error }
         }
     }
 
@@ -59,7 +59,7 @@ class UserRepository {
                 { transaction }
             )
         } catch (error) {
-            console.log(error);
+            return { errorMessage: error }
         }
     }
     cancelPayment = async ({ transaction, impUid }) => {
@@ -70,7 +70,7 @@ class UserRepository {
             )
             return cancel
         } catch (error) {
-            console.log(error);
+            return { errorMessage: error }
         }
     }
     checkAlreadyCancel = async ({ impUid }) => {
@@ -83,7 +83,7 @@ class UserRepository {
                 paranoid: false
             })
         } catch (error) {
-            console.log(error);
+            return { errorMessage: error }
         }
     }
 }

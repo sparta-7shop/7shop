@@ -14,7 +14,7 @@ class UserService {
         try {
             return await this.addressRepository.postAddress(addressName, userId)
         } catch (error) {
-            console.log(error);
+            return { errorMessage: error }
         }
     }
 
@@ -23,7 +23,7 @@ class UserService {
             const address = await this.addressRepository.getAddress({ userId })
             return address
         } catch (error) {
-            console.log(error);
+            return { errorMessage: error }
         }
     }
 
@@ -32,7 +32,7 @@ class UserService {
         try {
             return await this.paymentRepository.payment({ impUid, amount })
         } catch (error) {
-            console.log(error);
+            return { errorMessage: error }
         }
     }
 
@@ -40,10 +40,13 @@ class UserService {
         try {
             const payment = await this.paymentRepository.checkDuplicate({ impUid })
             if (payment) {
-                return { errorMessage: "이미 결제된 내역이 있습니다" }
+                return { code: 409, errorMessage: "이미 결제된 내역이 있습니다" }
+            }
+            if (!payment) {
+                return { code: 409, errorMessage: "존재하지 않는 결제입니다." }
             }
         } catch (error) {
-            console.log(error);
+            return { errorMessage: error }
         }
     }
 
@@ -53,10 +56,10 @@ class UserService {
         try {
             const payment = await this.paymentRepository.checkAlreadyCancel({ impUid })
             if (payment) {
-                return { errorMessage: "이미 취소된 결제입니다!" }
+                return { code: 409, errorMessage: "이미 취소된 결제입니다!" }
             }
         } catch (error) {
-            console.log(error);
+            return { errorMessage: error }
         }
     }
     cancelPayment = async ({ impUid }) => {
@@ -72,7 +75,7 @@ class UserService {
 
         } catch (error) {
             await transaction.rollback()
-            console.log(error);
+            return { errorMessage: error }
         }
     }
 
