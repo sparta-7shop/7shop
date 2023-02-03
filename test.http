@@ -1,0 +1,10 @@
+POST 127.0.0.1:3000/admin/users/:userId
+Content-Type: application/json
+
+{
+  "userId": 1
+}
+
+### 유저 GET
+GET 127.0.0.1:3000
+Content-Type: application/json

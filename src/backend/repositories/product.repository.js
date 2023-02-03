@@ -12,6 +12,9 @@ class ProductRepository {
         const products = await this.productModel.findAll()
         return products
     }
+
+
+
 }
 
 module.exports = ProductRepository

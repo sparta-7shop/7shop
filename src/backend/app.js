@@ -2,20 +2,24 @@ const express = require('express')
 const cookieParser = require('cookie-parser')
 const { sequelize } = require('./db');
 const path = require('path')
-
+const morgan =require('morgan');
 const port = 3000
 const app = express()
 const adminRoutes = require('./routers/admin.routers.js');
 const productRoutes = require('./routers/product.routers.js');
 const userRoutes = require('./routers/user.routers.js')
 
+app.set('view engine', 'html');
+
 app.use(cookieParser())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '../frontend/view'))); // 정적파일, 이미지파일
 app.use(express.static(path.join(__dirname, '../frontend/public'))); // 정적파일, 이미지파일
-
+app.use(express.static(path.join(__dirname, '../frontend/view'))); // 정적파일, 이미지파일
+app.use(morgan('dev'));
 app.use('/', [adminRoutes, productRoutes, userRoutes])
+
+
 
 
 sequelize

@@ -1,19 +1,61 @@
+//user Table
+//name, email, password, phone
+//cart Table
+//cartId, product_id, user_id, count
 class UserRepository {
     constructor(userModel) {
         this.userModel = userModel
     }
-    getCart = async (userId) => {
+    getCartItem = async (userId) => {
         try {
-            const getCart = await this.userModel.findOne({ where: { id: userId } })
-            console.log('카트 불러오기', getCart)
-            return getCart
+          return await this.userModel.findOne({
+              where: {id: userId}
+            })
         }catch (error){
             console.log(error);
         }
     }
+    addCartItem = async (prodId, userId, count) => {
+        try {
+          return await this.userModel.create({
+                product_id: prodId,
+                user_id: userId,
+                count
+              },
+              {
+                where: {user_id: userId}
+              });
+        }catch (error){
+            console.log(error);
+        }
+    }
+    updateCartItemQuantity = async (userId,prodId,count) => {
+      try{
+        const updateItemQuantity = await this.userModel.update({
+          count
+        },{
+          where: {user_id: userId, product_id: prodId}
+        })
+        return updateItemQuantity
+      } catch (error) {
+        console.log(error)
+      }
+    }
 
 
-
+    //쿠팡의 경우 cartitemIds[], itemStatus를 페이로드에 넣어 구분함
+    deleteCartItem = async (userId, prodId) => {
+        try {
+          return await this.userModel.destroy({
+                where: {user_id: userId, product_id: prodId}
+              },
+              {
+                truncate: true
+              })
+        } catch (error){
+            console.log(error);
+        }
+    }
 
 
 }
