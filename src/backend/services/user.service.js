@@ -11,32 +11,52 @@ class UserService {
 
     /* -------------주소-----------------------------*/
     postAddress = async (addressName, userId) => {
-        return await this.addressRepository.postAddress(addressName, userId)
+        try {
+            return await this.addressRepository.postAddress(addressName, userId)
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     getAddress = async ({ userId }) => {
-        const address = await this.addressRepository.getAddress({ userId })
-        return address
+        try {
+            const address = await this.addressRepository.getAddress({ userId })
+            return address
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     /* -------------결제-----------------------------*/
     payment = async ({ impUid, amount }) => {
-        return await this.paymentRepository.payment({ impUid, amount })
+        try {
+            return await this.paymentRepository.payment({ impUid, amount })
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     checkDuplicate = async ({ impUid }) => {
-        const payment = await this.paymentRepository.checkDuplicate({ impUid })
-        if (payment) {
-            return { errorMessage: "이미 결제된 내역이 있습니다" }
+        try {
+            const payment = await this.paymentRepository.checkDuplicate({ impUid })
+            if (payment) {
+                return { errorMessage: "이미 결제된 내역이 있습니다" }
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
 
     /* -------------결제취소-----------------------------*/
     checkAlreadyCancel = async ({ impUid }) => {
-        const payment = await this.paymentRepository.checkAlreadyCancel({ impUid })
-        if (payment) {
-            return { errorMessage: "이미 취소된 결제입니다!" }
+        try {
+            const payment = await this.paymentRepository.checkAlreadyCancel({ impUid })
+            if (payment) {
+                return { errorMessage: "이미 취소된 결제입니다!" }
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
     cancelPayment = async ({ impUid }) => {
@@ -52,7 +72,7 @@ class UserService {
 
         } catch (error) {
             await transaction.rollback()
-            return { errorMessage: error.message }
+            console.log(error);
         }
     }
 
