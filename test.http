@@ -1,0 +1,31 @@
+GET localhost:3000/admin/users/1
+Content-Type: application/json
+
+{
+  "userid": 1
+}
+
+### 유저 SIGUP
+POST localhost:3000/users/signup
+Content-Type: application/json
+
+{
+"name": "홍길동",
+"email":"asd@da1sdd.com",
+"password": "1234",
+"phone": "000-1234-1234"
+}
+
+### 유저 LOGIN
+# @no-cookie-jar
+POST localhost:3000/users/login
+Content-Type: application/json
+
+{
+  "email": "asd@da1sdd.com",
+  "password":"1234"
+}
+
+### 유저 LOOUT
+GET localhost:3000/users/logout
+Content-Type: application/json
