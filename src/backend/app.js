@@ -2,7 +2,7 @@ const express = require('express')
 const cookieParser = require('cookie-parser')
 const { sequelize } = require('./db');
 const path = require('path')
-const morgan =require('morgan');
+const morgan = require('morgan');
 const port = 3000
 const app = express()
 const adminRoutes = require('./routers/admin.routers.js');
@@ -23,7 +23,7 @@ app.use('/', [adminRoutes, productRoutes, userRoutes])
 
 
 sequelize
-    .sync({ force: false})
+    .sync({ force: true })
     .then(() => {
         console.log('데이터베이스 연결 성공!');
     })
