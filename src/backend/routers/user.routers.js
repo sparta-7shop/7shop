@@ -9,7 +9,7 @@ const userController = new UserController(Users)
 const router = express.Router();
 
 // // 유저 회원가입
-router.post('/users/signup', userController.userSinup);
+router.post('/users/signup', userController.userSignup);
 // // 유저 로그인
 router.post('/users/login', userController.userLogin);
 // //유저 로그아웃

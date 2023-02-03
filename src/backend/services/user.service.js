@@ -10,30 +10,42 @@ class UserService {
 
 	userRepository = new UserRepository(Users);
 
-	userSigup = async ( name, email, password, phone ) => {
-		const hash = await bcrypt.hash(password, 12);
 
-		const userSigup = await this.userRepository.userSigup(
-			name, email, hash, phone
-		);
-		return userSigup;
+//ㅎ
+	userSignup = async ( loginInfo ) => {
+		const hashedPassword = await bcrypt.hash(loginInfo.password, 12);
+		loginInfo.password = hashedPassword;
+
+		const userSignup = await this.userRepository.userSignup(loginInfo);
 	};
 
 	userLogin = async ( loginInfo ) => {
-		const user = await this.userRepository.findUser(loginInfo);
+		try {
+			const user = await this.userRepository.findUser(loginInfo);
 
-		const comparePassword = await bcrypt.compare(loginInfo.password, user.password);
+			if ( !user ) {
+				return { status : 400, message : "가입되지않은 회원 입니다." };
+			}
 
-		const accessToken = jwt.sign(
-			{ id : user.id, },
-			process.env.COOKIE_SECRET,
-			{ expiresIn : '1d' }
-		);
+			const comparePassword = await bcrypt.compare(loginInfo.password, user.password);
 
-		return { status: 200, accessToken}
+			if ( !comparePassword ) {
+				return { status : 400, message : "비밀번호가 일치하지않습니다." };
+			}
 
+			const accessToken = jwt.sign(
+				{ id : user.id, },
+				process.env.COOKIE_SECRET,
+				{ expiresIn : '1d' }
+			);
 
+			return { status : 200, message : '회원가입 완료', accessToken };
+
+		} catch ( err ) {
+			return { status : 500, message : "예상치못한 오류 입니다." };
+		}
 	};
+
 
 }
 

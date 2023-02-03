@@ -5,29 +5,24 @@ class UserRepository {
 		this.userModels = userModels;
 	}
 
-	userSigup = async ( name, email, hash, phone ) => {
-		try {
-			const userSigup = await this.userModels.create({
-				name,
-				email,
-				password : hash,
-				phone
-			});
-			return userSigup;
-		} catch ( error ) {
-			console.error(error);
-		}
-	}
+	userSignup = async ( loginInfo ) => {
+		await this.userModels.create({
+			name : loginInfo.name,
+			email : loginInfo.email,
+			password : loginInfo.password,
+			phone : loginInfo.phone,
+		});
+		return;
+	};
 
 
-		findUser = async ( loginInfo ) => {
-			const findUser = await this.userModels.findOne({
-				where: { [Op.or] : [ { email: loginInfo.email } ] }
-			});
-			console.log("333333findUser",findUser);
-			return findUser
-		};
-
+	findUser = async ( loginInfo ) => {
+		const findUser = await this.userModels.findOne({
+			where : { [Op.or] : [ { email : loginInfo.email } ] }
+		});
+		console.log("333333findUser", findUser);
+		return findUser;
+	};
 
 
 }

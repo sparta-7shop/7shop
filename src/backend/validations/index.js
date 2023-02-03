@@ -1,12 +1,13 @@
 const Joi = require('joi');
+const storage = require('./joi_storage');
 
-// 회원가입
-signupValidation = Joi.object({
-	name : Joi.string().min(2).max(10).not().required(),
-	email : Joi.string().email().required(),
-	password : Joi.string().min(4).pattern(new RegExp('^[a-z0-9]*$')),
-	confirm : Joi.ref('password'),
-	phone : Joi.string().length(11).pattern(new RegExp('^[0-9]*$'))
+//회원가입
+const signupValidation = Joi.object({
+	name : storage.getSignupName(),
+	email : storage.getSignupEmail(),
+	password : storage.getSignupPassword(),
+	confirm : storage.getSignupConfirm(),
+	phone : storage.getSignupPhone()
 });
 
 
@@ -18,4 +19,5 @@ const userLoginValidation = Joi.object({
 
 module.exports = {
 	userLoginValidation,
+	signupValidation
 };

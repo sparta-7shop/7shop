@@ -10,10 +10,10 @@ POST localhost:3000/users/signup
 Content-Type: application/json
 
 {
-"name": "홍길동",
-"email":"asd@da1sdd.com",
+"name": "1",
+"email":"jinro@jinro.com",
 "password": "1234",
-"phone": "000-1234-1234"
+"phone": "01012341234"
 }
 
 ### 유저 LOGIN
@@ -22,7 +22,7 @@ POST localhost:3000/users/login
 Content-Type: application/json
 
 {
-  "email": "asd@da1sdd.com",
+  "email": "jinro@jinro.com",
   "password":"1234"
 }
 

@@ -1,7 +1,7 @@
 const { Users } = require('../db');
 const UserService = require('../services/user.service');
 const passport = require('passport');
-const { userLoginValidation } = require('../validations');
+const { userLoginValidation, signupValidation } = require('../validations');
 
 class UserController {
 	constructor ( userController ) {
@@ -11,44 +11,37 @@ class UserController {
 	userService = new UserService(Users);
 
 
-	userSinup = async ( req, res ) => {
-		const { name, email, password, phone } = req.body;
+	userSignup = async ( req, res ) => {
+		try {
+			const loginInfo = await signupValidation.validateAsync(req.body);
 
-		const userSigup = await this.userService.userSigup(
-			name,
-			email,
-			password,
-			phone
-		);
+			const { status, message } = await this.userService.userSignup(loginInfo);
 
-		return res.json({ 'msg' : '회원가입' });
+			return res.status(status).json({ message });
+
+		} catch ( err ) {
+			if(err.isJoi){
+				return res.status(422).json({messge: err.details[0].message})
+			}
+			res.status(500).json({message: err.message})
+		}
+
 	};
 
-	// userSinup = async ( req, res ) => {
-	// 	const user
-	// }
-
-	// userLogin = async ( req, res, next ) => {
-	// 	const { email, password} = req.body
-	//
-	// 	const userLogin = await this.userService.userLogin
-	// 	res.cookie('token', userLogin)
-	//
-	// };
 	userLogin = async ( req, res, next ) => {
 		const loginInfo = await userLoginValidation.validateAsync(req.body);
 
-		const { status, accessToken } = await this.userService.userLogin(loginInfo)
+		const { status, message, accessToken } = await this.userService.userLogin(loginInfo);
 
 		res.cookie('accessToken', accessToken);
-		return res.status(status).json({accessToken: accessToken})
+		return res.status(status).json({ message: message , accessToken : accessToken || '' });
 	};
 
 
-userLogout = ( req, res, next ) => {
-	res.clearCookie('accessToken')
-	return res.status(200).json({message:'로그아웃 성공'})
-};
+	userLogout = ( req, res, next ) => {
+		res.clearCookie('accessToken');
+		return res.status(200).json({ message : '로그아웃 성공' });
+	};
 
 }
 
