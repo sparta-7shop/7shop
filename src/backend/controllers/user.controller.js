@@ -29,8 +29,9 @@ class UserController {
     }
     //현재 필요한 로직
     //카트내 고객이 원하는 물건의 수량이 products에 있는 재고보다 많을경우에 대한 예외처리
-    //카트내 이미 물건이 있을경우 물건을 추가하는게 아닌 수량만 +1\
+    //카트내 이미 물건이 있을경우 물건을 추가하는게 아닌 수량만 +1
     // --> product.repo에 접근?
+    //
     //고민중..
     addCartItem = async (req, res) => {
         const { userId } = req.params;
