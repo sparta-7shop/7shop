@@ -10,10 +10,12 @@ POST localhost:3000/users/signup
 Content-Type: application/json
 
 {
-"name": "1",
-"email":"jinro@jinro.com",
-"password": "1234",
-"phone": "01012341234"
+  "name": "성민섭",
+  "email": "ms_sh0728@naver.com",
+  "emailConfirm": "4079",
+  "password": "1234",
+  "passwordConfirm": "1234",
+  "phone": "01012341234"
 }
 
 ### 유저 LOGIN
@@ -22,10 +24,20 @@ POST localhost:3000/users/login
 Content-Type: application/json
 
 {
-  "email": "jinro@jinro.com",
+  "email": "ms_sh0728@naver.com",
   "password":"1234"
 }
 
 ### 유저 LOOUT
 GET localhost:3000/users/logout
 Content-Type: application/json
+
+
+### test
+POST localhost:3000/users/sendMail
+Content-Type: application/json
+
+{
+  "name": "테스트입니당",
+  "email": "ms_sh0728@naver.com"
+}

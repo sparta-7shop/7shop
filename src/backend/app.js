@@ -5,6 +5,7 @@ const path = require('path');
 const nunjucks = require('nunjucks'); // 화면 그리기 위한
 const dotenv = require('dotenv'); // 설명 파일
 const morgan = require('morgan');
+const authMidde = require('./middlewares/auth')
 
 dotenv.config();
 const port = 3000;

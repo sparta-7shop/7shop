@@ -3,10 +3,14 @@ const storage = require('./joi_storage');
 
 //회원가입
 const signupValidation = Joi.object({
+
 	name : storage.getSignupName(),
 	email : storage.getSignupEmail(),
+	emailConfirm: Joi.equal(storage.getSignupEmailConfirm()).required().messages({
+		'any.only':'인증번호가 일치하지 않습니다.'
+	}),
 	password : storage.getSignupPassword(),
-	confirm : storage.getSignupConfirm(),
+	passwordConfirm : storage.getSignupPasswordConfirm(),
 	phone : storage.getSignupPhone()
 });
 

@@ -1,3 +1,4 @@
+const path = require('path')
 require('dotenv').config();
 const env = process.env;
 
@@ -26,13 +27,5 @@ const production = {
     dialect: 'mysql',
 };
 
-// const jwtConfig = {
-//     secretKey: env.JWT_SECRETKEY || 'cleaning',
-//     option: {
-//         algorithm: env.JWT_ALGORITHM || 'HS256',
-//         expiresIn: env.JWT_EXPIRESIN || '60m',
-//     },
-// };
 
-// export default { development, test, production, jwtConfig };
 module.exports = { development, test, production }

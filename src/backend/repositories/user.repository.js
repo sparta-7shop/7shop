@@ -24,6 +24,9 @@ class UserRepository {
 		return findUser;
 	};
 
+	userMypage = async () => {
+
+	}
 
 }
 
