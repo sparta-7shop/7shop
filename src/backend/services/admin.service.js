@@ -54,32 +54,41 @@ class AdminService {
       console.log(error);
     }
   };
-
-  createProduct = async (
-    name,
-    price,
-    stock,
-    img_path,
-    description,
-    admin_id,
-    category_Id
-  ) => {
+  /**
+    * 상품등록(service)
+    */
+  createProduct = async ({ name, price, stock, description, productImage, adminId, categoryId }) => {
     try {
-      const response = await this.productRepository.createProduct(
-        name,
-        price,
-        stock,
-        img_path,
-        description,
-        admin_id,
-        category_Id
-      );
-
-      return response;
+      /* -----이미지 파일 관련 예외처리----- */
+      if (!productImage) {
+        return {
+          code: 412,
+          errorMessage: '사진을 등록해주세요!'
+        }
+      }
+      const lastDot = productImage.lastIndexOf('.');
+      const ext = productImage.substring(lastDot, productImage.length);
+      if (!ext.match(/\.(jpg|jpeg|png|gif)$/)) {
+        return {
+          code: 412,
+          errorMessage: '이미지 파일만 등록가능합니다.'
+        }
+      }
+      /* -----기타 예외처리-----*/
+      if (!name || !price || !stock || !description) {
+        return {
+          code: 412,
+          errorMessage: '빈칸을 채워주세요!'
+        }
+      }
+      /*-------------------------------*/
+      const product = await this.productRepository.createProduct(
+        { name, price, stock, description, productImage, adminId, categoryId })
+      return product
     } catch (error) {
-      console.log(error);
+      return { errorMessage: error }
     }
-  };
+  }
 }
 
 module.exports = AdminService;

@@ -56,28 +56,17 @@ class AdminRepository {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  createProduct = async (
-    name,
-    price,
-    stock,
-    img_path,
-    description,
-    admin_id,
-    category_Id
-  ) => {
-    const createProduct = await this.adminModel.create({
-      name,
-      price,
-      stock,
-      img_path,
-      description,
-      admin_id,
-      category_Id,
-    });
-    console.log("createProduct", createProduct);
-    return createProduct;
-  };
-}
+    /**
+    * 상품등록(repository)
+    */
+    createProduct = async ({ name, price, stock, description, productImage, adminId, categoryId }) => {
+      try {
+        const product = await this.adminModel.create(
+          { name, price, stock, description, img_path: productImage, admin_id: adminId, category_Id: categoryId })
+        return product
+      } catch (error) {
+        return { errorMessage: error }
+      }
+    }
+  }
 module.exports = AdminRepository;

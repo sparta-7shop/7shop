@@ -1,8 +1,10 @@
 const express = require("express");
 
-const AdminController = require("../controllers/admin.controller");
-const { Admin } = require("../db/index");
-const adminController = new AdminController(Admin);
+const AdminController = require('../controllers/admin.controller');
+const multerUpload = require('../middlewares/multer')
+const { Admin } = require('../db/index')
+const adminController = new AdminController(Admin)
+
 
 const router = express.Router();
 
@@ -13,6 +15,7 @@ router.put("/admin/product/:productId", adminController.updateProduct);
 //상품 삭제(관리자)
 router.post("/admin/product/:productId", adminController.deleteProduct);
 //상품 등록(관리자)
-router.post("/admin/product", adminController.createProduct);
+router.post('/admin/product', multerUpload, adminController.createProduct)
+
 
 module.exports = router;
