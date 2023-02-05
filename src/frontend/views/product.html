@@ -90,6 +90,7 @@
                 })
                 .catch((error) => {
                     // 예외처리
+                    console.log(error);
                     alert(error.response.data.errorMessage);
                 });
         }

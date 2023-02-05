@@ -57,61 +57,34 @@ class AdminController {
     }
   };
 
+  /**
+   * 상품등록(controller)
+   */
   createProduct = async (req, res) => {
+    const { name, price, stock, description } = req.body
+    const productImage = req.file
+    const adminId = 1
+    const categoryId = 1
     try {
-      const {
+      const product = await this.productService.createProduct({
         name,
-        price,
-        stock,
-        img_path,
+        price: parseInt(price),
+        stock: parseInt(stock),
         description,
-        admin_id,
-        category_Id,
-      } = req.body;
-
-      const a = await this.adminService.createProduct(
-        name,
-        price,
-        stock,
-        img_path,
-        description,
-        admin_id,
-        category_Id
-      );
-
-      return res.json({ "msg": "생성완료", a });
+        productImage: productImage?.filename,
+        adminId: parseInt(adminId),
+        categoryId: parseInt(categoryId)
+      })
+      if (product.errorMessage) { return res.status(412).json({ errorMessage: product.errorMessage }) }
+      return res.status(201).json({
+        message: '상품 등록이 완료되었습니다.'
+      })
     } catch (error) {
       console.log(error);
-    }
-
-    /**
-     * 상품등록(controller)
-     */
-    createProduct = async (req, res) => {
-      const { name, price, stock, description } = req.body
-      const productImage = req.file
-      const adminId = 1
-      const categoryId = 1
-      try {
-        const product = await this.productService.createProduct({
-          name,
-          price: parseInt(price),
-          stock: parseInt(stock),
-          description,
-          productImage: productImage?.filename,
-          adminId: parseInt(adminId),
-          categoryId: parseInt(categoryId)
-        })
-        if (product.errorMessage) { return res.status(product.code).json({ errorMessage: product.errorMessage }) }
-        return res.status(201).json({
-          message: '상품 등록이 완료되었습니다.'
-        })
-      } catch (error) {
-        return res.status(500).json({
-          errorMessage: error.errorMessage,
-        });
-      }
+      return res.status(500).json({
+        errorMessage: error.errorMessage,
+      });
     }
   }
-
+}
 module.exports = AdminController;

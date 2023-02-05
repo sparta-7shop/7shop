@@ -1,5 +1,3 @@
-const { create } = require("domain");
-
 class AdminRepository {
   constructor(adminModel) {
     this.adminModel = adminModel;
@@ -69,4 +67,18 @@ class AdminRepository {
       }
     }
   }
+  /**
+    * 상품등록(repository)
+    */
+  createProduct = async ({ name, price, stock, description, productImage, adminId, categoryId }) => {
+    try {
+      const product = await this.adminModel.create(
+        { name, price, stock, description, img_path: productImage, admin_id: adminId, category_Id: categoryId })
+      return product
+    } catch (error) {
+      return { errorMessage: error }
+    }
+  }
+
+}
 module.exports = AdminRepository;
