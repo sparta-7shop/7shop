@@ -1,4 +1,5 @@
-const express = require('express');
+const express = require("express");
+const ProductController = require("../controllers/product.controller");
 
 const UserController = require('../controllers/user.controller');
 const { Users, Address, Payments } = require('../db')

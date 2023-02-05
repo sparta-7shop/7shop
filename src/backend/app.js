@@ -11,7 +11,7 @@ const userRoutes = require('./routers/user.routers.js')
 //머지 테스트
 // app.set('view engine', 'html');
 
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'html');
@@ -25,22 +25,24 @@ app.use('/', [adminRoutes, productRoutes, userRoutes])
 
 
 app.get('/', (req, res) => {
-    res.render('payment.html')
+  res.render('payment.html')
 })
 app.get('/product', (req, res) => {
-    res.render('product.html')
+  res.render('product.html')
 })
 
 
 
 
 sequelize
-    .sync({ force: false })
-    .then(() => {
-        console.log('데이터베이스 연결 성공!');
-    })
-    .catch((err) => {
-        console.error(err);
-    });
+  .sync({ force: false })
+  .then(() => {
+    console.log('데이터베이스 연결 성공!');
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
-app.listen(port, () => { console.log(`${port}번 포트로 연결됐습니다`); })
+app.listen(port, () => {
+  console.log(`${port}번 포트로 연결됐습니다`);
+});
