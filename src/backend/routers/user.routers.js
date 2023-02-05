@@ -1,6 +1,10 @@
-const express = require('express');
+const express = require("express");
+const ProductController = require("../controllers/product.controller");
 
 // const userController = require('../controllers/user');
+const UserController = require("../controllers/user.controller");
+const { Users } = require("../db");
+const userController = new ProductController(Users);
 
 const router = express.Router();
 
@@ -10,7 +14,6 @@ const router = express.Router();
 // router.post('/users/login', userController.###);
 // //유저 로그아웃
 // router.post('/users/logout', userController.###;
-
 
 // //장바구니 불러오기
 // router.get('/users/cart', userController.###);
@@ -27,8 +30,5 @@ const router = express.Router();
 // router.post('/users/mypage', userController.###);
 // //주소 입력
 // router.post('/users/address', userController.###);
-
-
-
 
 module.exports = router;
