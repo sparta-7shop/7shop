@@ -8,52 +8,67 @@ class AdminController {
   adminService = new AdminService(Admin)
   productService = new AdminService(Products)
 
+  /**
+  * 회원삭제(controller)
+  */
   deleteUser = async (req, res) => {
     try {
       const { userId } = req.params;
-      console.log("userId", userId);
 
-      const a = await this.adminService.deleteUser(userId);
-      console.log("a", a);
-      return res.json({ "msg": "삭제완료", a });
+      const user = await this.adminService.deleteUser(userId);
+      if (user.errorMessage) { return res.status(user.code).json({ errorMessage: user.errorMessage }) }
+      return res.json({ message: '회원 삭제 완료' });
     } catch (error) {
-      console.log(error);
+      return res.status(500).json({
+        errorMessage: error.errorMessage,
+      });
     }
   };
 
+  /**
+  * 상품수정(controller)
+  */
   updateProduct = async (req, res) => {
     try {
+      const { name, price, stock, description } = req.body;
+      const productImage = req.file
       const { productId } = req.params;
-      const { name, price, stock, img_path, description } = req.body;
-      console.log("productId", productId);
-      console.log(price);
 
-      const a = await this.adminService.updateProduct(
+      const product = await this.adminService.updateProduct({
         productId,
         name,
         price,
         stock,
-        img_path,
+        productImage: productImage?.filename,
         description
-      );
-
-      console.log("a", a);
-      return res.json({ "msg": "수정완료", a });
+      })
+      if (product.errorMessage) { return res.status(412).json({ errorMessage: product.errorMessage }) }
+      return res.status(201).json({
+        message: '상품 수정이 완료되었습니다.'
+      })
     } catch (error) {
-      console.log(error);
+      return res.status(500).json({
+        errorMessage: error.errorMessage,
+      });
     }
   };
 
+  /**
+   * 상품삭제(controller)
+   */
   deleteProduct = async (req, res) => {
     try {
       const { productId } = req.params;
-      console.log("productId", productId);
 
-      const a = await this.adminService.deleteProduct(productId);
-      console.log("a", a);
-      return res.json({ "msg": "삭제완료", a });
+      const product = await this.adminService.deleteProduct(productId);
+      if (product.errorMessage) { return res.status(412).json({ errorMessage: product.errorMessage }) }
+      return res.status(201).json({
+        message: '상품 삭제가 완료되었습니다.'
+      })
     } catch (error) {
-      console.log(error);
+      return res.status(500).json({
+        errorMessage: error.errorMessage,
+      });
     }
   };
 
@@ -80,7 +95,6 @@ class AdminController {
         message: '상품 등록이 완료되었습니다.'
       })
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         errorMessage: error.errorMessage,
       });
