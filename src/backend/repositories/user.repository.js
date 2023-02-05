@@ -8,50 +8,50 @@ class UserRepository {
     }
     getCartItem = async (userId) => {
         try {
-          return await this.userModel.findAll({
-              where: {user_id: userId}
+            return await this.userModel.findAll({
+                where: { user_id: userId }
             })
-        }catch (error){
+        } catch (error) {
             console.log(error);
         }
     }
     addCartItem = async (prodId, userId, count) => {
         try {
-          return await this.userModel.create({
+            return await this.userModel.create({
                 product_id: prodId,
                 user_id: userId,
                 count
-              },
-              {
-                where: {user_id: userId}
-              });
-        }catch (error){
+            },
+                {
+                    where: { user_id: userId }
+                });
+        } catch (error) {
             console.log(error);
         }
     }
-    updateCartItemQuantity = async (userId,prodId,count) => {
-      try{
-        return await this.userModel.update({
-          count
-        }, {
-          where: {user_id: userId, product_id: prodId}
-        })
-      } catch (error) {
-        console.log(error)
-      }
+    updateCartItemQuantity = async (userId, prodId, count) => {
+        try {
+            return await this.userModel.update({
+                count
+            }, {
+                where: { user_id: userId, product_id: prodId }
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 
     //쿠팡의 경우 cartitemIds[], itemStatus를 페이로드에 넣어 구분함
     deleteCartItem = async (userId, prodId) => {
         try {
-          return await this.userModel.destroy({
-                where: {user_id: userId, product_id: prodId}
-              },
-              {
-                truncate: true
-              })
-        } catch (error){
+            return await this.userModel.destroy({
+                where: { user_id: userId, product_id: prodId }
+            },
+                {
+                    truncate: true
+                })
+        } catch (error) {
             console.log(error);
         }
     }
@@ -59,7 +59,7 @@ class UserRepository {
     /* -------------주소-----------------------------*/
     postAddress = async (addressName, userId) => {
         try {
-            const address = await this.userRepository.create({ name: addressName, user_id: userId })
+            const address = await this.userModel.create({ name: addressName, user_id: userId })
             return address
         } catch (error) {
             return { errorMessage: error }
@@ -68,7 +68,7 @@ class UserRepository {
 
     getAddress = async ({ userId }) => {
         try {
-            const address = await this.userRepository.findAll({
+            const address = await this.userModel.findAll({
                 where: { user_id: userId }
             })
             return address
@@ -80,7 +80,7 @@ class UserRepository {
     /* -------------결제-----------------------------*/
     payment = async ({ impUid, amount }) => {
         try {
-            await this.userRepository.create({
+            await this.userModel.create({
                 total_price: amount,
                 impUid,
                 status: 1
@@ -92,7 +92,7 @@ class UserRepository {
 
     checkDuplicate = async ({ impUid }) => {
         try {
-            return await this.userRepository.findOne({
+            return await this.userModel.findOne({
                 where: { impUid },
                 paranoid: false
             })
@@ -106,7 +106,7 @@ class UserRepository {
     /* -------------결제취소---------------------------*/
     cancelUpdate = async ({ transaction, impUid }) => {
         try {
-            return await this.userRepository.update(
+            return await this.userModel.update(
                 { status: 0 },
                 { where: { impUid } },
                 { transaction }
@@ -117,7 +117,7 @@ class UserRepository {
     }
     cancelPayment = async ({ transaction, impUid }) => {
         try {
-            const cancel = await this.userRepository.destroy(
+            const cancel = await this.userModel.destroy(
                 { where: { impUid } },
                 { transaction }
             )
@@ -128,7 +128,7 @@ class UserRepository {
     }
     checkAlreadyCancel = async ({ impUid }) => {
         try {
-            return await this.userRepository.findOne({
+            return await this.userModel.findOne({
                 where: {
                     impUid,
                     status: 0
