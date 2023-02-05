@@ -86,12 +86,10 @@
                 })
                 .then((res) => {
                     // 응답처리
-                    console.log(res);
                     alert(res.data.message);
                 })
                 .catch((error) => {
                     // 예외처리
-                    console.log(error);
                     alert(error.response.data.errorMessage);
                 });
         }

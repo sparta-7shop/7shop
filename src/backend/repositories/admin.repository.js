@@ -11,7 +11,9 @@ class AdminRepository {
             console.log(error)
         }
     }
-
+    /**
+    * 상품등록(repository)
+    */
     createProduct = async ({ name, price, stock, description, productImage, adminId, categoryId }) => {
         try {
             const product = await this.adminModel.create(

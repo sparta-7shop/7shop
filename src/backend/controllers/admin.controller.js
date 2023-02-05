@@ -21,6 +21,9 @@ class AdminController {
         //
     }
 
+    /**
+     * 상품등록(controller)
+     */
     createProduct = async (req, res) => {
         const { name, price, stock, description } = req.body
         const productImage = req.file
