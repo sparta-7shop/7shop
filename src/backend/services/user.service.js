@@ -36,8 +36,8 @@ class UserService {
     }
     /*----------   addCartItem: 장바구니에 물건을 추가합니다.   ----------*/
     addCartItem = async (prodId, userId, count) => {
-        try{
-            const addUserCart = await this.cartRepository.addCartItem(prodId,userId,count)
+        try {
+            const addUserCart = await this.cartRepository.addCartItem(prodId, userId, count)
             // if(parseInt(prodId) === undefined || null) {
             //     return {
             //         errorMessage: "해당하는 제품이 없습니다."
@@ -58,6 +58,7 @@ class UserService {
     getAddress = async ({ userId }) => {
         try {
             const address = await this.addressRepository.getAddress({ userId })
+            if (address.length < 1) { return { errorMessage: '주소가 존재하지 않습니다' } }
             return address
         } catch (error) {
             return { errorMessage: error }
@@ -118,46 +119,46 @@ class UserService {
 
 
     /*----------  updateCartItemQuantity: 카트내의 한 품목의 수량을 업데이트합니다.  ----------*/
-    updateCartItemQuantity = async (userId, prodId,count) => {
+    updateCartItemQuantity = async (userId, prodId, count) => {
         try {
-            if(parseInt(userId) === undefined || null) {
-                return{
+            if (parseInt(userId) === undefined || null) {
+                return {
                     errorMessage: "해당하는 유저가 없습니다."
                 }
             }
-            if(parseInt(prodId) === undefined || null) {
-                return{
+            if (parseInt(prodId) === undefined || null) {
+                return {
                     errorMessage: "해당하는 상품이 없습니다."
                 }
             }
-            if(parseInt(count) <= 0) {
+            if (parseInt(count) <= 0) {
                 return {
                     errorMessage: "상품은 1개이상의 수량만 선택 가능합니다."
                 }
             }
             return await this.cartRepository.updateCartItemQuantity(userId, prodId, count)
-        } catch (error){
+        } catch (error) {
             console.log(error)
             return { errorMessage: error }
         }
-        }
+    }
 
     /*----------  deleteCartItem: 카트에서 상품을 하나 제거합니다.  ----------*/
-    deleteCartItem = async (userId,prodId) => {
+    deleteCartItem = async (userId, prodId) => {
         try {
-            if(parseInt(userId) === undefined || null) {
-                return{
+            if (parseInt(userId) === undefined || null) {
+                return {
                     errorMessage: "해당하는 유저가 없어 삭제가 불가능합니다."
                 }
             }
-            if(parseInt(prodId) === undefined || null) {
-                return{
-                    code:409,
+            if (parseInt(prodId) === undefined || null) {
+                return {
+                    code: 409,
                     errorMessage: "해당하는 상품이 없어 삭제가 불가능합니다."
                 }
             }
             return await this.cartRepository.deleteCartItem(userId, prodId)
-        } catch (error){
+        } catch (error) {
             console.log(error)
             return { errorMessage: error }
         }

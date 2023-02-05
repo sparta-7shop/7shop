@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>상품등록</title>
+    </head>
+    <style>
+        .content {
+            width: 700px;
+            display: block;
+            margin: 50px 0px 0px 350px;
+        }
+
+        .btn {
+            position: relative;
+            left: 550px;
+        }
+
+        .form-group {
+            margin: 40px auto;
+            display: block;
+        }
+
+        .view-img {
+            width: 400px;
+            height: 400px;
+            display: block;
+            margin: 100px 0px 0px 520px;
+        }
+
+        .upload-img {
+            width: 400px;
+            height: 400px;
+            display: block;
+            margin-top: 50px;
+            background-image: url('https://image.flaticon.com/icons/png/512/149/149094.png');
+            background-size: cover;
+            background-position: center;
+            border-style: hidden;
+        }
+
+        .wrap {
+            width: 1350px;
+            margin: auto;
+        }
+    </style>
+    <!-- axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        // 사진 미리보기
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('upload-img').src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                document.getElementById('upload-img').src = '';
+            }
+        }
+
+        function cancel() {
+            alert('게시글 작성을 취소하였습니다');
+            window.location.href = '/';
+        }
+
+        function apply() {
+            const productImage = document.getElementById('productImage');
+            const productName = document.getElementById('productName').value;
+            const productPrice = document.getElementById('productPrice').value;
+            const productStock = document.getElementById('productStock').value;
+            const productDesc = document.getElementById('productDesc').value;
+
+            const formData = new FormData();
+            formData.append('productImage', productImage.files[0]);
+            formData.append('name', productName);
+            formData.append('price', productPrice);
+            formData.append('stock', productStock);
+            formData.append('description', productDesc);
+
+            axios
+                .post('http://localhost:3000/admin/product', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                })
+                .then((res) => {
+                    // 응답처리
+                    console.log(res);
+                    alert(res.data.message);
+                })
+                .catch((error) => {
+                    // 예외처리
+                    console.log(error);
+                    alert(error.response.data.errorMessage);
+                });
+        }
+    </script>
+    <body>
+        <section>
+            <div class="wrap">
+                <div class="view-img" id="imagePreview">
+                    <img id="upload-img" class="upload-img" />
+                </div>
+                <div class="content">
+                    <form id="ocr_form" name="productImage" enctype="multipart/form-data">
+                        <label for="productImage">파일찾기</label>
+                        <input
+                            type="file"
+                            id="productImage"
+                            name="productImage"
+                            onchange="readURL(this)"
+                        />
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">상품명</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="productName"
+                                name="productName"
+                                placeholder="상품명을 입력하세요."
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">가격</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="productPrice"
+                                name="productPrice"
+                                placeholder="상품가격을 입력하세요."
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">재고</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="productStock"
+                                name="productStock"
+                                placeholder="상품재고를 입력하세요."
+                            />
+                        </div>
+                        <div class="productDesc">
+                            <label for="formGroupProductDescInput">설명</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="productDesc"
+                                name="productDesc"
+                                placeholder="상품설명을 입력하세요."
+                            />
+                        </div>
+                    </form>
+                    <div>
+                        <button type="button" class="btn btn-primary" onclick="apply()">
+                            작성
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="cancel()">
+                            취소
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
