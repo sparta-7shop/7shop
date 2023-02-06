@@ -3,7 +3,6 @@ const IamportService = require('../services/iamport.service')
 const { sequelize } = require('../db/index')
 
 const UserService = require('../services/user.service')
-const ProductService = require("../services/product.service");
 
 
 class UserController {
@@ -17,7 +16,7 @@ class UserController {
     iamportService = new IamportService()
     orderService = new UserService(Orders)
 
-    postAddress = async (req, res, next) => {
+    postAddress = async (req, res) => {
         try {
             const { addressName } = req.body
             const userId = 1
@@ -28,7 +27,7 @@ class UserController {
         }
     }
 
-    getAddress = async (req, res, next) => {
+    getAddress = async (req, res) => {
         const { userId } = req.params
         try {
             const address = await this.addressService.getAddress({ userId })
@@ -41,11 +40,13 @@ class UserController {
 
     order = async ({ req, res, paymentId, transaction }) => {
         try {
-            const userId = 1
-            const address = await this.addressService.getAddress({ userId })
-            const addressName = address[1].addressName // 프론트에서 받아노는 address로 바꿔줘야함 -> body에 담아와야할듯
+            const userId = 2
 
-            await this.orderService.orderProduct({ addressName, userId, paymentId, transaction })
+            const { count } = req.body
+            const address = await this.addressService.getAddress({ userId })
+            const addressName = address[0].addressName // 프론트에서 받아오는 address로 바꿔줘야함 -> body에 담아와야할듯
+
+            await this.orderService.orderProduct({ count, addressName, userId, paymentId, transaction })
             return res.status(201).json({ message: '주문이 완료되었습니다.' })
         } catch (error) {
             console.log(error);
@@ -53,7 +54,7 @@ class UserController {
         }
     }
 
-    payment = async (req, res, _next) => {
+    payment = async (req, res) => {
         const { impUid, amount } = req.body
         try {
             // 1. 아임포트에 요청해서 결제 완료 기록 존재하는지 확인
@@ -78,8 +79,8 @@ class UserController {
         }
     }
 
-    cancelPayment = async (req, res, next) => {
-        const { impUid } = req.body
+    cancelPayment = async (req, res) => {
+        const { impUid, count } = req.body
         try {
             //  1. 존재하는 건인지 확인
             const isExistPayment = await this.paymentService.checkDuplicate({ impUid })
@@ -96,9 +97,7 @@ class UserController {
             })
 
             // 3. 취소
-            await this.paymentService.cancelPayment({
-                impUid,
-            })
+            await this.paymentService.cancelPayment({ impUid, count })
             return res.json({ message: `${canceledAmount}원 취소 완료` })
         } catch (error) {
             return res.status(500).json({ errorMessage: error.errorMessage })
@@ -112,16 +111,15 @@ class UserController {
         const { userId } = req.params;
         try {
             const getUserCart = await this.cartService.getCartItem(userId);
-            console.log(typeof getUserCart)
-            console.log("겟카트1", getUserCart[0].id)
-            if (getUserCart === null) {
-                return res.status(500).json({ errorMessage: "유저를 찾을수 없습니다." })
+            if (getUserCart.errorMessage) {
+                return res.status(getUserCart.code).json({ errorMessage: getUserCart.errorMessage })
             }
-            console.log("카트 불러와써염", getUserCart)
-            return res.json({ message: '카트를 성공적으로 불러왔습니다.', getUserCart })
+
+            return res.status(200).json({ message: '카트를 성공적으로 불러왔습니다.', getUserCart })
 
         } catch (error) {
-            return res.status(500).json({ errorMessage: error.errorMessage })
+            console.log('error', error)
+            return res.status(500).json({ errorMessage: error })
         }
     }
 
@@ -137,20 +135,10 @@ class UserController {
         const { userId } = req.params;
         const { prodId, count } = req.body;
 
-        if (!prodId) {
-            return res.status(412).json({ errorMessage: "추가하려는 상품이 올바르지 않습니다." })
-        }
-        console.log('userId', userId)
-        if (userId === undefined) {
-            return res.status(412).json({ errorMessage: "유저를 찾을 수 없습니다." })
-        }
-        if (count <= 0) {
-            return res.status(412).json({ errorMessage: "수량은 1보다 작을수 없습니다." })
-        }
         try {
             const addUserCart = await this.cartService.addCartItem(prodId, userId, count);
-            if (addUserCart === null) {
-                return res.status(500).json({ errorMessage: "유저를 찾을수 없습니다." })
+            if (addUserCart?.errorMessage) {
+                return res.status(addUserCart.code).json({ errorMessage: addUserCart.errorMessage })
             }
             return res.status(200).json({
                 message: "카트에 물건을 성공적으로 담았습니다."
@@ -167,10 +155,10 @@ class UserController {
             const { userId, prodId } = req.params;
             const { count } = req.body;
             const updateItemQuantity = await this.cartService.updateCartItemQuantity(userId, prodId, count)
-            if (count <= 0) {
-                return res.status(412).json({ errorMessage: "수량은 1부터 입력가능합니다." })
+            if (updateItemQuantity?.errorMessage) {
+                return res.status(updateItemQuantity.code).json({ errorMessage: updateItemQuantity.errorMessage })
             }
-            return res.status(200).json({ message: "수량이 정상적으로 수정되었습니다.", updateItemQuantity })
+            return res.status(200).json({ message: "수량이 정상적으로 수정되었습니다." })
         } catch (error) {
             console.log(error)
             return res.status(500).json({ errorMessage: error.errorMessage })
@@ -182,11 +170,10 @@ class UserController {
             const { userId } = req.params;
             const { prodId } = req.body;
             const deleteUserCart = await this.cartService.deleteCartItem(userId, prodId);
-            console.log("유저 삭제", deleteUserCart);
-            if (!deleteUserCart) {
-                return res.status(500).json({ errorMessage: "해당하는 상품 또는 유저를 찾을 수 없습니다." })
+            if (deleteUserCart.errorMessage) {
+                return res.status(deleteUserCart.code).json({ errorMessage: deleteUserCart.errorMessage })
             }
-            return res.status(200).json({ message: "상품을 성공적으로 삭제했습니다.", deleteUserCart })
+            return res.status(201).json({ message: "상품을 성공적으로 삭제했습니다.", deleteUserCart })
         } catch (error) {
             return res.status(500).json({ errorMessage: error.errorMessage })
         }
