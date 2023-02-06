@@ -1,9 +1,8 @@
-
-const { Address, Payments, Users, Carts, Orders } = require('../db')
+const { Address, Payments, Users, Carts, Orders, Products } = require('../db')
 const { sequelize } = require('../db/index')
 
 const UserRepository = require('../repositories/user.repository')
-const ProductRepository = require("../repositories/product.repository");
+const ProductRepository = require('../repositories/product.repository')
 
 class UserService {
     constructor(userService) {
@@ -14,6 +13,8 @@ class UserService {
     paymentRepository = new UserRepository(Payments)
     orderRepository = new UserRepository(Orders)
     cartRepository = new UserRepository(Carts)
+    userRepository = new UserRepository(Users)
+    productRepository = new ProductRepository(Products)
 
     /* -------------주소-----------------------------*/
     postAddress = async (addressName, userId) => {
@@ -40,7 +41,11 @@ class UserService {
     /* ---------- getCartItem: Repository에서 userId를 매개로 해당 유저의 장바구니를 가져옵니다. ----------*/
     getCartItem = async (userId) => {
         try {
-            return await this.cartRepository.getCartItem(userId)
+            const getUserCart = await this.cartRepository.getCartItem(userId)
+            if (getUserCart.length < 1) {
+                return { code: 412, errorMessage: "카트에 담긴 상품이 없습니다." }
+            }
+            return getUserCart
         } catch (error) {
             console.log(error)
             return { errorMessage: error }
@@ -49,18 +54,54 @@ class UserService {
     /*----------   addCartItem: 장바구니에 물건을 추가합니다.   ----------*/
     addCartItem = async (prodId, userId, count) => {
         try {
+            const user = await this.userRepository.getUser(userId)
+            if (!user) {
+                return { code: 412, errorMessage: "유저를 찾을 수 없습니다." }
+            }
+            const product = await this.productRepository.getProduct(prodId)
+            const stock = product.dataValues.stock
+            if (count <= 0) {
+                return { code: 412, errorMessage: "수량은 1보다 작을수 없습니다." }
+            }
+            if (count > stock) {
+                return { code: 412, errorMessage: `상품의 수량이 부족합니다 (남은수량:${stock}개)` }
+            }
             const addUserCart = await this.cartRepository.addCartItem(prodId, userId, count)
-            // if(parseInt(prodId) === undefined || null) {
-            //     return {
-            //         errorMessage: "해당하는 제품이 없습니다."
-            //     }
-            // }
-            // if(parseInt(count) <= 0) {
-            //     return {
-            //         errorMessage: "재고가 0인 상품은 카트에 담을 수 없습니다."
-            //     }
-            // }
             return addUserCart
+        } catch (error) {
+            console.log(error)
+            return { errorMessage: error }
+        }
+    }
+    /*----------  updateCartItemQuantity: 카트내의 한 품목의 수량을 업데이트합니다.  ----------*/
+    updateCartItemQuantity = async (userId, prodId, count) => {
+        try {
+            const product = await this.productRepository.getProduct(prodId)
+            if (!product) {
+                return { code: 412, errorMessage: "해당 제품이 존재하지 않습니다." }
+            }
+            const stock = product.dataValues.stock
+            if (count <= 0) {
+                return { code: 412, errorMessage: "수량은 1보다 작을수 없습니다." }
+            }
+            if (count > stock) {
+                return { code: 412, errorMessage: `상품의 수량이 부족합니다 (남은수량:${stock}개)` }
+            }
+            return await this.cartRepository.updateCartItemQuantity(userId, prodId, count)
+        } catch (error) {
+            console.log(error)
+            return { errorMessage: error }
+        }
+    }
+
+    /*----------  deleteCartItem: 카트에서 상품을 하나 제거합니다.  ----------*/
+    deleteCartItem = async (userId, prodId) => {
+        try {
+            const product = await this.productRepository.getProduct(prodId)
+            if (!product) {
+                return { code: 412, errorMessage: "해당 제품이 존재하지 않습니다." }
+            }
+            return await this.cartRepository.deleteCartItem(userId, prodId)
         } catch (error) {
             console.log(error)
             return { errorMessage: error }
@@ -68,8 +109,12 @@ class UserService {
     }
 
     /* -------------결제-----------------------------*/
-    orderProduct = async ({ addressName, userId, paymentId, transaction }) => {
+    orderProduct = async ({ count, addressName, userId, paymentId, transaction }) => {
         try {
+            // product 재고 업데이트
+            await this.productRepository.decrementStock({ count, transaction })
+            // 카트 상태 업데이트
+            await this.cartRepository.updateCartStatus({ userId })
             return await this.orderRepository.orderProduct({ addressName, userId, paymentId, transaction })
         } catch (error) {
             console.log(error)
@@ -104,17 +149,17 @@ class UserService {
     checkAlreadyCancel = async ({ impUid }) => {
         try {
             const payment = await this.paymentRepository.checkAlreadyCancel({ impUid })
-            if (payment) {
+            if (!payment) {
                 return { code: 409, errorMessage: "이미 취소된 결제입니다!" }
             }
         } catch (error) {
             return { errorMessage: error }
         }
     }
-    cancelPayment = async ({ impUid }) => {
+    cancelPayment = async ({ impUid, count }) => {
         const transaction = await sequelize.transaction()
         try {
-            await this.paymentRepository.cancelUpdate({ transaction, impUid })
+            await this.productRepository.IncrementtStock({ transaction, count })
 
             await this.paymentRepository.cancelPayment({ transaction, impUid })
 
@@ -124,53 +169,6 @@ class UserService {
 
         } catch (error) {
             await transaction.rollback()
-            return { errorMessage: error }
-        }
-    }
-
-
-    /*----------  updateCartItemQuantity: 카트내의 한 품목의 수량을 업데이트합니다.  ----------*/
-    updateCartItemQuantity = async (userId, prodId, count) => {
-        try {
-            if (parseInt(userId) === undefined || null) {
-                return {
-                    errorMessage: "해당하는 유저가 없습니다."
-                }
-            }
-            if (parseInt(prodId) === undefined || null) {
-                return {
-                    errorMessage: "해당하는 상품이 없습니다."
-                }
-            }
-            if (parseInt(count) <= 0) {
-                return {
-                    errorMessage: "상품은 1개이상의 수량만 선택 가능합니다."
-                }
-            }
-            return await this.cartRepository.updateCartItemQuantity(userId, prodId, count)
-        } catch (error) {
-            console.log(error)
-            return { errorMessage: error }
-        }
-    }
-
-    /*----------  deleteCartItem: 카트에서 상품을 하나 제거합니다.  ----------*/
-    deleteCartItem = async (userId, prodId) => {
-        try {
-            if (parseInt(userId) === undefined || null) {
-                return {
-                    errorMessage: "해당하는 유저가 없어 삭제가 불가능합니다."
-                }
-            }
-            if (parseInt(prodId) === undefined || null) {
-                return {
-                    code: 409,
-                    errorMessage: "해당하는 상품이 없어 삭제가 불가능합니다."
-                }
-            }
-            return await this.cartRepository.deleteCartItem(userId, prodId)
-        } catch (error) {
-            console.log(error)
             return { errorMessage: error }
         }
     }
