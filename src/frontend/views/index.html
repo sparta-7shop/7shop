@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Zay Shop eCommerce HTML CSS Template</title>
+        <title>7Shop</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <link rel="apple-touch-icon" href="/img/apple-icon.png" />
         <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
-
         <link rel="stylesheet" href="/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/css/templatemo.css" />
         <link rel="stylesheet" href="/css/custom.css" />
@@ -143,12 +142,31 @@ https://templatemo.com/tm-559-zay-shop
                             >
                         </a>
                         <!-- 마이페이지 -->
-                        <a
+                        <div class="btn-group">
+                            <button
+                                type="button"
+                                class="btn btn-success dropdown-toggle"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                Info
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="login.html">로그인</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="#" onclick="logout()"
+                                        >로그아웃</a
+                                    >
+                                </li>
+                                <li><a class="dropdown-item" href="#">마이페이지</a></li>
+                            </ul>
+                        </div>
+                        <!-- <a
                             class="nav-icon position-relative text-decoration-none"
                             href="login.html"
                         >
                             <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </div>
@@ -602,11 +620,27 @@ https://templatemo.com/tm-559-zay-shop
         <!-- End Footer -->
 
         <!-- Start Script -->
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="/js/jquery-1.11.0.min.js"></script>
         <script src="/js/jquery-migrate-1.2.1.min.js"></script>
         <script src="/js/bootstrap.bundle.min.js"></script>
         <script src="/js/templatemo.js"></script>
         <script src="/js/custom.js"></script>
+        <script>
+            function logout() {
+                axios
+                    .get('http://localhost:3000/users/logout', {})
+                    .then((res) => {
+                        // 응답처리
+                        alert(res.data.message);
+                        window.location.href = '/';
+                    })
+                    .catch((error) => {
+                        // 예외처리
+                        alert(error.response?.data?.message);
+                    });
+            }
+        </script>
         <!-- End Script -->
     </body>
 </html>
