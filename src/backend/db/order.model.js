@@ -13,10 +13,6 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: { name: 'user_id', allowNull: false },
                 targetKey: 'id',
             });
-            models.Orders.hasMany(models.OrdersProducts, {
-                foreignKey: { name: 'order_id', allowNull: false },
-                sourceKey: 'id',
-            });
             models.Orders.belongsTo(models.Payments, {
                 foreignKey: { name: 'payment_id', allowNull: false },
                 targetKey: 'id',

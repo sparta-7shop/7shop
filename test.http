@@ -1,9 +1,8 @@
-GET localhost:3000/admin/users/1
-Content-Type: application/json
 
-{
-  "userid": 1
-}
+ 
+### 유저 GET
+GET 127.0.0.1:3000
+Content-Type: application/json
 
 ### 유저 SIGUP
 POST localhost:3000/users/signup
