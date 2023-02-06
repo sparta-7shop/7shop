@@ -11,7 +11,6 @@ const nodemailer = require('nodemailer');
 require('dotenv').config({ path : "../../../.env" });
 const env = process.env;
 
-const ProductRepository = require('../repositories/product.repository')
 
 class UserService {
     constructor(userService) {
