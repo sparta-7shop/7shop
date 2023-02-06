@@ -1,6 +1,7 @@
 $(function() {
 	let socket = io();
 	let getUserInfo=()=>{
+		return
 		return sessionStorage.getItem('userInfo')&&JSON.parse(sessionStorage.getItem('userInfo'));
 	};
 	let userInfo=getUserInfo();

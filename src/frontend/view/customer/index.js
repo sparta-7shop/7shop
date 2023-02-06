@@ -34,6 +34,7 @@ $(function() {
 	}
 
 	$('#msg').submit(function() {
+
 		userInfo=sessionStorage.getItem('userInfo')&&JSON.parse(sessionStorage.getItem('userInfo'));
 		if (userInfo.userName && userInfo.token && userInfo.userId) {
 			const data={
