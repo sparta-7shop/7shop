@@ -62,6 +62,7 @@ $(function() {
     console.log('chat message',data);
     $('#messages').append($('<li>').text(`${data.userType==='customer'?'손님 ':"상담사 "} ${data.userName}:${data.msg}`));
   });
+  //소켓에서 토큰받아오기
   socket.on('getToken', (data) => {
     console.log('getToken',data);
     sessionStorage.setItem('userInfo',JSON.stringify({
