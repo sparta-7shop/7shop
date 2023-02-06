@@ -43,7 +43,4 @@ router.post('/users/address', addressController.postAddress);
 //주소 불러오기
 router.get('/users/address/:userId', addressController.getAddress)
 
-
-
-
 module.exports = router;
