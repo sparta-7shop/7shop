@@ -1,10 +1,42 @@
-POST 127.0.0.1:3000/admin/users/:userId
-Content-Type: application/json
 
-{
-  "userId": 1
-}
  
 ### 유저 GET
 GET 127.0.0.1:3000
 Content-Type: application/json
+
+### 유저 SIGUP
+POST localhost:3000/users/signup
+Content-Type: application/json
+
+{
+  "name": "성민섭",
+  "email": "ms_sh0728@naver.com",
+  "emailConfirm": "4079",
+  "password": "1234",
+  "passwordConfirm": "1234",
+  "phone": "01012341234"
+}
+
+### 유저 LOGIN
+# @no-cookie-jar
+POST localhost:3000/users/login
+Content-Type: application/json
+
+{
+  "email": "ms_sh0728@naver.com",
+  "password":"1234"
+}
+
+### 유저 LOOUT
+GET localhost:3000/users/logout
+Content-Type: application/json
+
+
+### test
+POST localhost:3000/users/sendMail
+Content-Type: application/json
+
+{
+  "name": "테스트입니당",
+  "email": "ms_sh0728@naver.com"
+}
