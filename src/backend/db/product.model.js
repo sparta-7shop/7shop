@@ -21,10 +21,6 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: { name: 'admin_id', allowNull: false },
                 sourceKey: 'id',
             });
-            models.Products.hasMany(models.OrdersProducts, {
-                foreignKey: { name: 'product_id', allowNull: false },
-                sourceKey: 'id',
-            });
         }
     }
 

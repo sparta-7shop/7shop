@@ -78,13 +78,25 @@ class UserRepository {
     }
 
     /* -------------결제-----------------------------*/
-    payment = async ({ impUid, amount }) => {
+    orderProduct = async ({ addressName, userId, paymentId, transaction }) => {
         try {
-            await this.userModel.create({
+            return await this.userModel.create(
+                { address: addressName, user_id: userId, payment_id: paymentId },
+                { transaction })
+        } catch (error) {
+            console.log(error);
+            return { errorMessage: error }
+        }
+    }
+
+    payment = async ({ impUid, amount, transaction }) => {
+        try {
+            return await this.userModel.create({
                 total_price: amount,
                 impUid,
                 status: 1
-            })
+            },
+                { transaction })
         } catch (error) {
             return { errorMessage: error }
         }

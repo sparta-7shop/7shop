@@ -1,5 +1,5 @@
 
-const { Address, Payments, Users, Carts } = require('../db')
+const { Address, Payments, Users, Carts, Orders } = require('../db')
 const { sequelize } = require('../db/index')
 
 const UserRepository = require('../repositories/user.repository')
@@ -12,6 +12,7 @@ class UserService {
 
     addressRepository = new UserRepository(Address)
     paymentRepository = new UserRepository(Payments)
+    orderRepository = new UserRepository(Orders)
 
     /* -------------주소-----------------------------*/
     postAddress = async (addressName, userId) => {
@@ -22,8 +23,18 @@ class UserService {
         }
     }
 
-    userRepository = new UserRepository(Users)
-    cartRepository = new UserRepository(Carts)
+    getAddress = async ({ userId }) => {
+        try {
+            const Alladdress = await this.addressRepository.getAddress({ userId })
+            if (Alladdress.length < 1) { return { errorMessage: '주소가 존재하지 않습니다' } }
+            const addressName = Alladdress.map((address) => {
+                return { addressName: address.name }
+            })
+            return addressName
+        } catch (error) {
+            return { errorMessage: error }
+        }
+    }
 
     /* ---------- getCartItem: Repository에서 userId를 매개로 해당 유저의 장바구니를 가져옵니다. ----------*/
     getCartItem = async (userId) => {
@@ -55,20 +66,19 @@ class UserService {
         }
     }
 
-    getAddress = async ({ userId }) => {
+    /* -------------결제-----------------------------*/
+    orderProduct = async ({ addressName, userId, paymentId, transaction }) => {
         try {
-            const address = await this.addressRepository.getAddress({ userId })
-            if (address.length < 1) { return { errorMessage: '주소가 존재하지 않습니다' } }
-            return address
+            return await this.orderRepository.orderProduct({ addressName, userId, paymentId, transaction })
         } catch (error) {
+            console.log(error)
             return { errorMessage: error }
         }
     }
 
-    /* -------------결제-----------------------------*/
-    payment = async ({ impUid, amount }) => {
+    payment = async ({ impUid, amount, transaction }) => {
         try {
-            return await this.paymentRepository.payment({ impUid, amount })
+            return await this.paymentRepository.payment({ impUid, amount, transaction })
         } catch (error) {
             return { errorMessage: error }
         }
@@ -77,9 +87,9 @@ class UserService {
     checkDuplicate = async ({ impUid }) => {
         try {
             const payment = await this.paymentRepository.checkDuplicate({ impUid })
-            if (payment) {
-                return { code: 409, errorMessage: "이미 결제된 내역이 있습니다" }
-            }
+            // if (payment) {
+            //     return { code: 409, errorMessage: "이미 결제된 내역이 있습니다" }
+            // }
             if (!payment) {
                 return { code: 409, errorMessage: "존재하지 않는 결제입니다." }
             }
@@ -163,7 +173,6 @@ class UserService {
             return { errorMessage: error }
         }
     }
-
 }
 
 module.exports = UserService
