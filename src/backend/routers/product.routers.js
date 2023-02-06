@@ -11,5 +11,4 @@ const router = express.Router();
 router.get('/products/list', productController.getProducts)
 
 
-
 module.exports = router;

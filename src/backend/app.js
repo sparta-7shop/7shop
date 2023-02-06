@@ -14,11 +14,15 @@ instrument(io, {
   auth: false,
   mode: "development",
 });
+
 const cookieParser = require('cookie-parser')
 const { sequelize } = require('./db');
 const path = require('path')
 const morgan = require('morgan');
+const authMidde = require('./middlewares/auth')
+const dotenv = require('dotenv'); // 설명 파일
 
+dotenv.config();
 const adminRoutes = require('./routers/admin.routers.js');
 const productRoutes = require('./routers/product.routers.js');
 const userRoutes = require('./routers/user.routers.js')

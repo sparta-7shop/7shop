@@ -2,6 +2,8 @@
 //name, email, password, phone
 //cart Table
 //cartId, product_id, user_id, count
+const { Op } = require('sequelize');
+
 class UserRepository {
     constructor(userModel) {
         this.userModel = userModel
@@ -55,6 +57,31 @@ class UserRepository {
             console.log(error);
         }
     }
+
+  userSignup = async ( loginInfo ) => {
+    await this.userModel.create({
+      name : loginInfo.name,
+      email : loginInfo.email,
+      password : loginInfo.password,
+      phone : loginInfo.phone,
+    });
+  };
+
+
+  findUser = async ( loginInfo ) => {
+    const findUser = await this.userModel.findOne({
+      where : { [Op.or] : [ { email : loginInfo.email } ] }
+    });
+    console.log("333333findUser", findUser);
+    return findUser;
+  };
+
+  userMypage = async () => {
+
+  }
+
+
 }
 
-module.exports = UserRepository
+
+module.exports = UserRepository;
