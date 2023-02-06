@@ -169,27 +169,27 @@ class UserRepository {
         }
     }
 
-  userSignup = async ( loginInfo ) => {
-    await this.userModel.create({
-      name : loginInfo.name,
-      email : loginInfo.email,
-      password : loginInfo.password,
-      phone : loginInfo.phone,
-    });
-  };
+    userSignup = async (loginInfo) => {
+        await this.userModel.create({
+            name: loginInfo.name,
+            email: loginInfo.email,
+            password: loginInfo.password,
+            phone: loginInfo.phone,
+        });
+    };
 
 
-  findUser = async ( loginInfo ) => {
-    const findUser = await this.userModel.findOne({
-      where : { [Op.or] : [ { email : loginInfo.email } ] }
-    });
-    console.log("333333findUser", findUser);
-    return findUser;
-  };
+    findUser = async (loginInfo) => {
+        const findUser = await this.userModel.findOne({
+            where: { [Op.or]: [{ email: loginInfo.email }] }
+        });
+        // console.log("333333findUser", findUser);
+        return findUser;
+    };
 
-  userMypage = async () => {
+    userMypage = async () => {
 
-  }
+    }
 
 
 }
