@@ -94,7 +94,6 @@ class UserRepository {
             return await this.userModel.create({
                 total_price: amount,
                 impUid,
-                status: 1
             },
                 { transaction })
         } catch (error) {

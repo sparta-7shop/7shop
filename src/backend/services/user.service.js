@@ -13,6 +13,7 @@ class UserService {
     addressRepository = new UserRepository(Address)
     paymentRepository = new UserRepository(Payments)
     orderRepository = new UserRepository(Orders)
+    cartRepository = new UserRepository(Carts)
 
     /* -------------주소-----------------------------*/
     postAddress = async (addressName, userId) => {
