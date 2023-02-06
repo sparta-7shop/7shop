@@ -1,12 +1,12 @@
 $(function() {
 	let socket = io();
 	let getUserInfo=()=>{
-		return
 		return sessionStorage.getItem('userInfo')&&JSON.parse(sessionStorage.getItem('userInfo'));
 	};
 	let userInfo=getUserInfo();
 	let userType='service';
 	let targetId;
+
 
 	$('#qryOnlineCustomers').on('click',function () {
 		userInfo=getUserInfo();
@@ -92,7 +92,7 @@ $(function() {
 	});
 	socket.on('chat message', function(data) {
 		console.log('chat message',data);
-		$('#messages').append($('<li>').text(`${data.userType==='customer'?'고객':"상담사"}${data.userType==='customer'?data.source:''} ${data.userName}:${data.msg}`));
+		$('#messages').append($('<li>').text(`${data.userType==='customer'?'손님':"상담사"}${data.userType==='customer'?data.source:''} ${data.userName}:${data.msg}`));
 	});
 	//common socket event end
 });
