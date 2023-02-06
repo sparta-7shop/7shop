@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head >
+    <meta charset="UTF-8" >
+    <title >상담사 채팅방</title >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover" name="viewport" />
+    <link rel="stylesheet" href="./index.css" >
+</head >
+<body >
+<ul class="menu">
+    <button><span id="qryOnlineCustomers">현재 접속중인 유저 검색하기</span></button>
+</ul>
+<ul id="messages"></ul>
+<form action="" id="msg">
+    <input id="m" autocomplete="off" /><button>Send</button>
+</form>
+<div id="login">
+    <input type="text" name="userName" id="userName" />
+    <input type="password" name="psw" id="psw" />
+    <button>전송</button>
+</div>
+<div id='userList'></div>
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="./index.js"></script >
+</body >
+</html >
