@@ -9,9 +9,42 @@ class ProductController {
     productService = new ProductService(Products)
 
     getProducts = async (req, res) => {
-        const productList = await this.productService.getProducts();
-        return res.json({ productList })
+        try {
+            const productList = await this.productService.getProducts();
+            return res.json({ productList })
+        } catch (error) {
+            return res.json({ errorMessage: error })
+        }
     }
+
+    getProduct = async (req, res) => {
+        const { productId } = req.params
+        try {
+            const product = await this.productService.getProduct(productId)
+            return res.json({ product })
+
+        } catch (error) {
+
+        }
+    }
+
+    getProductsByCategory1 = async (req, res) => {
+        try {
+            const productList = await this.productService.getProductsByCategory1();
+            return res.json({ productList })
+        } catch (error) {
+            return res.json({ errorMessage: error })
+        }
+    }
+    getProductsByCategory2 = async (req, res) => {
+        try {
+            const productList = await this.productService.getProductsByCategory2();
+            return res.json({ productList })
+        } catch (error) {
+            return res.json({ errorMessage: error })
+        }
+    }
+
 }
 
 module.exports = ProductController

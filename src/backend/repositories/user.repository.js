@@ -3,6 +3,7 @@
 //cart Table
 
 const { Sequelize } = require('sequelize');
+const { Products } = require('../db')
 
 //cartId, product_id, user_id, count
 const { Op } = require('sequelize');
@@ -75,20 +76,20 @@ class UserRepository {
     }
 
     /* -------------주소-----------------------------*/
-    postAddress = async (addressName, userId) => {
+    postAddress = async (addressName, id) => {
         try {
-            const address = await this.userModel.create({ name: addressName, user_id: userId })
+            const address = await this.userModel.create({ name: addressName, user_id: id })
             return address
         } catch (error) {
             return { errorMessage: error }
         }
     }
 
-    getAddress = async ({ userId }) => {
+    getAddress = async ({ id }) => {
         try {
             const address = await this.userModel.findAll(
                 {
-                    where: { user_id: userId }
+                    where: { user_id: id }
                 }
             )
             return address
@@ -169,28 +170,42 @@ class UserRepository {
         }
     }
 
-  userSignup = async ( loginInfo ) => {
-    await this.userModel.create({
-      name : loginInfo.name,
-      email : loginInfo.email,
-      password : loginInfo.password,
-      phone : loginInfo.phone,
-    });
-  };
+    userSignup = async (loginInfo) => {
+        await this.userModel.create({
+            name: loginInfo.name,
+            email: loginInfo.email,
+            password: loginInfo.password,
+            phone: loginInfo.phone,
+        });
+    };
 
 
-  findUser = async ( loginInfo ) => {
-    const findUser = await this.userModel.findOne({
-      where : { [Op.or] : [ { email : loginInfo.email } ] }
-    });
-    console.log("333333findUser", findUser);
-    return findUser;
-  };
+    findUser = async (loginInfo) => {
+        const findUser = await this.userModel.findOne({
+            where: { [Op.or]: [{ email: loginInfo.email }] }
+        });
+        // console.log("333333findUser", findUser);
+        return findUser;
+    };
 
-  userMypage = async () => {
+    userMypage = async () => {
 
-  }
+    }
 
+    getCartProductName = async (id) => {
+        try {
+            const getCartProduct = await this.userModel.findAll({
+                where: { user_id: id },
+                include: [{
+                    model: Products,
+                    attributes: ["name", "img_path"],
+                }]
+            })
+            return getCartProduct;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 }
 

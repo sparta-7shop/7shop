@@ -15,10 +15,12 @@ class AdminService {
   deleteUser = async (userId) => {
     try {
       const existUser = await this.userRepository.findUser(userId)
-      if (existUser) {
-        return { code: 409, errorMessage: '이미 삭제한 회원입니다.' }
+      if (existUser?.destroyTime) {
+        return { code: 412, errorMessage: '이미 삭제한 회원입니다.' }
       }
-
+      if (existUser === null) {
+        return { code: 412, errorMessage: '존재하지 않는 회원입니다.' }
+      }
       const deleteUser = await this.userRepository.deleteUser(userId);
       return deleteUser;
     } catch (error) {
@@ -119,6 +121,7 @@ class AdminService {
         }
       }
       /* -----기타 예외처리-----*/
+
       if (!name || !price || !stock || !description) {
         return {
           code: 412,
@@ -132,6 +135,26 @@ class AdminService {
     } catch (error) {
       return { errorMessage: error }
     }
+  }
+
+  // 유저 목록
+  userInfo = async () => {
+    const userInfo = await this.userRepository.userInfo();
+
+    userInfo.sort((a, b) => {
+      return b.id - a.id
+    })
+
+    return userInfo.map(info => {
+      return {
+        no: info.id,
+        name: info.name,
+        email: info.email,
+        phone: info.phone,
+        createdAt: info.createdAt
+      }
+    })
+
   }
 }
 
