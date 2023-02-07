@@ -21,10 +21,30 @@ class ProductRepository {
         }
     }
 
-    getProduct = async (prodId) => {
+    getProduct = async (productId) => {
         try {
             const products = await this.productModel.findOne({
-                where: { id: prodId }
+                where: { id: productId }
+            })
+            return products
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    getProductsByCategory1 = async () => {
+        try {
+            const products = await this.productModel.findAll({
+                where: { category_Id: 1 }
+            })
+            return products
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    getProductsByCategory2 = async () => {
+        try {
+            const products = await this.productModel.findAll({
+                where: { category_Id: 2 }
             })
             return products
         } catch (error) {

@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const storage = require('../validations/joi_storage');
 const nodemailer = require('nodemailer');
-require('dotenv').config({ path : "../../../.env" });
+require('dotenv').config({ path: "../../../.env" });
 const env = process.env;
 
 
@@ -25,17 +25,21 @@ class UserService {
     productRepository = new ProductRepository(Products)
 
     /* -------------주소-----------------------------*/
-    postAddress = async (addressName, userId) => {
+    postAddress = async (addressName, id) => {
         try {
-            return await this.addressRepository.postAddress(addressName, userId)
+            const address = await this.addressRepository.postAddress(addressName, id)
+            if (address.errorMessage) {
+                return { errorMessage: '이미 존재하는 주소거나 다른 오류입니다' }
+            }
+            return address
         } catch (error) {
             return { errorMessage: error }
         }
     }
 
-    getAddress = async ({ userId }) => {
+    getAddress = async ({ id }) => {
         try {
-            const Alladdress = await this.addressRepository.getAddress({ userId })
+            const Alladdress = await this.addressRepository.getAddress({ id })
             if (Alladdress.length < 1) { return { errorMessage: '주소가 존재하지 않습니다' } }
             const addressName = Alladdress.map((address) => {
                 return { addressName: address.name }
@@ -67,7 +71,7 @@ class UserService {
                 return { code: 412, errorMessage: "유저를 찾을 수 없습니다." }
             }
             const product = await this.productRepository.getProduct(prodId)
-            const stock = product.dataValues.stock
+            const stock = product?.dataValues.stock
             if (count <= 0) {
                 return { code: 412, errorMessage: "수량은 1보다 작을수 없습니다." }
             }
@@ -116,39 +120,39 @@ class UserService {
         }
     }
 
-  // 회원가입
-  userSignup = async ( loginInfo ) => {
-    const hashedPassword = await bcrypt.hash(loginInfo.password, 12);
-    loginInfo.password = hashedPassword;
+    // 회원가입
+    userSignup = async (loginInfo) => {
+        const hashedPassword = await bcrypt.hash(loginInfo.password, 12);
+        loginInfo.password = hashedPassword;
 
-    const userSignup = await this.userRepository.userSignup(loginInfo);
-  };
+        const userSignup = await this.userRepository.userSignup(loginInfo);
+    };
 
-  // // 인증메일
-  sendMail = async ( name, email ) => {
-    try {
-      console.log("호롤ㅇㄴ몰ㅇㄴㄻㅇ너롬ㅇㄶㅁㅇㄶ",name,email)
-      // 전송하기
-      console.log(env.MAIL, env.MAILPASSWORD)
-      const transporter = nodemailer.createTransport({
-        service: "Gmail",
-        auth: {
-          user: env.MAIL,
-          pass: env.MAILPASSWORD,
-        },
-        //변경부분 시작
-        tls: {
-          rejectUnauthorized: false,
-        },
-        //변경부분 끝
-      });
+    // // 인증메일
+    sendMail = async (name, email) => {
+        try {
+            console.log("호롤ㅇㄴ몰ㅇㄴㄻㅇ너롬ㅇㄶㅁㅇㄶ", name, email)
+            // 전송하기
+            console.log(env.MAIL, env.MAILPASSWORD)
+            const transporter = nodemailer.createTransport({
+                service: "Gmail",
+                auth: {
+                    user: env.MAIL,
+                    pass: env.MAILPASSWORD,
+                },
+                //변경부분 시작
+                tls: {
+                    rejectUnauthorized: false,
+                },
+                //변경부분 끝
+            });
 
-      // 보낼 메세지
-      let message = {
-        from : env.MAIL, // 보내는 사람
-        to : `${ name }<${ email }>`, // 받는 사람 이름과 이메일 주소
-        subject : '회원가입 메일 테스트', // 메일 제목html
-        html : `<div
+            // 보낼 메세지
+            let message = {
+                from: env.MAIL, // 보내는 사람
+                to: `${name}<${email}>`, // 받는 사람 이름과 이메일 주소
+                subject: '회원가입 메일 테스트', // 메일 제목html
+                html: `<div
       style='
       text-align: center;
       width: 50%;
@@ -157,62 +161,61 @@ class UserService {
       padding: 20px;
       box-shadow: 1px 1px 3px 0px #999;
       '>
-      <h2>${ name } 님, 안녕하세요.</h2> <br/>
+      <h2>${name} 님, 안녕하세요.</h2> <br/>
       <h2>제목: 회원가입 메일 테스트</h2> <br/>
       회원가입 메일 테스트<br/>
-      인증번호 : ${ storage.getSignupEmailConfirm() }<br/><br/><br/>
+      인증번호 : ${storage.getSignupEmailConfirm()}<br/><br/><br/>
       </div>`,
-      };
+            };
 
 
-      // 메일이 보내진 후의 콜백 함수
-      await transporter.sendMail(message, ( err ) => {
-        if ( err ) {
-          console.error(err);
-          return { code : 400, message : "if err 절 입니다." };
-        } else
-          return { code : 200, message : '메일전송 완료' };
+            // 메일이 보내진 후의 콜백 함수
+            await transporter.sendMail(message, (err) => {
+                if (err) {
+                    console.error(err);
+                    return { code: 400, message: "if err 절 입니다." };
+                } else
+                    return { code: 200, message: '메일전송 완료' };
 
-      });
-    } catch ( err ) {
+            });
+        } catch (err) {
+        }
+    };
+
+    // 로그인
+    userLogin = async (loginInfo) => {
+        try {
+            const user = await this.userRepository.findUser(loginInfo);
+
+            if (!user) {
+                return { code: 400, message: "가입되지않은 회원 입니다." };
+            }
+            // console.log("로그인정보오오오오오오오오", loginInfo)
+            const comparePassword = await bcrypt.compare(loginInfo.password, user.password);
+
+            if (!comparePassword) {
+                return { code: 400, message: "비밀번호가 일치하지않습니다." };
+            }
+
+            const accessToken = jwt.sign(
+                { id: user.id, name: user.name },
+                process.env.COOKIE_SECRET,
+                { expiresIn: '1d' }
+            );
+
+            return { code: 200, message: '로그인 완료', accessToken };
+
+        } catch (err) {
+            console.log(err)
+            return { code: 500, errorMessage: err };
+        }
+    };
+
+    // 마이페이지
+    userMypage = async () => {
+        const userSignup = await this.userRepository.userMypage();
+
     }
-  };
-
-  // 로그인
-  userLogin = async ( loginInfo ) => {
-    try {
-      const user = await this.userRepository.findUser(loginInfo);
-
-      if ( !user ) {
-        return { code : 400, message : "가입되지않은 회원 입니다." };
-      }
-      console.log("로그인정보오오오오오오오오",loginInfo)
-      const comparePassword = await bcrypt.compare(loginInfo.password, user.password);
-
-      if ( !comparePassword ) {
-        return { code : 400, message : "비밀번호가 일치하지않습니다." };
-      }
-
-      const accessToken = jwt.sign(
-        { id : user.id, name : user.name },
-        process.env.COOKIE_SECRET,
-        { expiresIn : '1d' }
-      );
-
-      return { code : 200, message : '로그인 완료', accessToken };
-
-    } catch ( err ) {
-      console.log(err)
-      return { code : 500, message : "예상치못한 오류 입니다." };
-
-    }
-  };
-
-  // 마이페이지
-  userMypage = async () => {
-    const userSignup = await this.userRepository.userMypage();
-
-  }
 
 
     /* -------------결제-----------------------------*/
@@ -276,6 +279,17 @@ class UserService {
 
         } catch (error) {
             await transaction.rollback()
+            return { errorMessage: error }
+        }
+    }
+
+    getCartProductName = async (id) => {
+        try {
+            const getCartProduct = await this.cartRepository.getCartProductName(id)
+            console.log("프로덕트ID", getCartProduct)
+            return getCartProduct
+        } catch (error) {
+            console.log(error)
             return { errorMessage: error }
         }
     }

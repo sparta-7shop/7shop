@@ -5,7 +5,7 @@ const { sequelize } = require('../db/index')
 const UserService = require('../services/user.service')
 const ProductService = require("../services/product.service");
 const { userLoginValidation, signupValidation } = require('../validations');
-require('dotenv').config({ path : "../../../.env" });
+require('dotenv').config({ path: "../../../.env" });
 
 
 
@@ -23,18 +23,19 @@ class UserController {
     postAddress = async (req, res) => {
         try {
             const { addressName } = req.body
-            const userId = 1
-            const address = await this.addressService.postAddress(addressName, userId)
+            const { id } = res.locals.user
+            const address = await this.addressService.postAddress(addressName, id)
+            if (address.errorMessage) { return res.status(500).json({ errorMessage: address.errorMessage }) }
             return res.json({ message: '주소 등록이 완료되었습니다!', address: address.name })
         } catch (error) {
-            return res.status(500).json({ errorMessage: error.errorMessage })
+            return res.status(500).json({ errorMessage: error })
         }
     }
 
     getAddress = async (req, res) => {
-        const { userId } = req.params
+        const { id } = res.locals.user
         try {
-            const address = await this.addressService.getAddress({ userId })
+            const address = await this.addressService.getAddress({ id })
             if (address.errorMessage) { return res.json({ errorMessage: address.errorMessage }) }
             return res.json({ address })
         } catch (error) {
@@ -112,9 +113,9 @@ class UserController {
     // 토큰값 전달 -> 복호화 -> 전역변수 userId를 불러와 userId를 처리해야함.
     //authmiddleware 에서 걸러지는것들은 다 예외처리 할 필요가 없음.
     getCartItem = async (req, res) => {
-        const { userId } = req.params;
+        const { id } = res.locals.user;
         try {
-            const getUserCart = await this.cartService.getCartItem(userId);
+            const getUserCart = await this.cartService.getCartItem(id);
             if (getUserCart.errorMessage) {
                 return res.status(getUserCart.code).json({ errorMessage: getUserCart.errorMessage })
             }
@@ -136,11 +137,10 @@ class UserController {
     //
     //고민중..
     addCartItem = async (req, res) => {
-        const { userId } = req.params;
         const { prodId, count } = req.body;
-
+        const { id } = res.locals.user;
         try {
-            const addUserCart = await this.cartService.addCartItem(prodId, userId, count);
+            const addUserCart = await this.cartService.addCartItem(prodId, id, count);
             if (addUserCart?.errorMessage) {
                 return res.status(addUserCart.code).json({ errorMessage: addUserCart.errorMessage })
             }
@@ -156,9 +156,10 @@ class UserController {
     }
     updateCartItemQuantity = async (req, res) => {
         try {
-            const { userId, prodId } = req.params;
+            const { prodId } = req.params;
+            const { id } = res.locals.user;
             const { count } = req.body;
-            const updateItemQuantity = await this.cartService.updateCartItemQuantity(userId, prodId, count)
+            const updateItemQuantity = await this.cartService.updateCartItemQuantity(id, prodId, count)
             if (updateItemQuantity?.errorMessage) {
                 return res.status(updateItemQuantity.code).json({ errorMessage: updateItemQuantity.errorMessage })
             }
@@ -171,9 +172,9 @@ class UserController {
 
     deleteCartItem = async (req, res) => {
         try {
-            const { userId } = req.params;
+            const { id } = res.locals.user;
             const { prodId } = req.body;
-            const deleteUserCart = await this.cartService.deleteCartItem(userId, prodId);
+            const deleteUserCart = await this.cartService.deleteCartItem(id, prodId);
             if (deleteUserCart.errorMessage) {
                 return res.status(deleteUserCart.code).json({ errorMessage: deleteUserCart.errorMessage })
             }
@@ -183,56 +184,69 @@ class UserController {
         }
     }
 
-  // 회원가입
-  userSignup = async ( req, res ) => {
-    try {
-      console.log("바디",req.body)
-      const loginInfo = await signupValidation.validateAsync(req.body);
-      console.log(loginInfo)
+    // 회원가입
+    userSignup = async (req, res) => {
+        try {
+            console.log("바디", req.body)
+            const loginInfo = await signupValidation.validateAsync(req.body);
+            console.log(loginInfo)
 
-      await this.userService.userSignup(loginInfo);
+            await this.userService.userSignup(loginInfo);
 
-      return res.status(200).json({ message : "가입완료" });
+            return res.status(200).json({ message: "가입완료" });
 
-    } catch ( err ) {
-      if ( err.isJoi ) {
-        return res.status(422).json({ messge : err.details[0].message });
-      }
-      res.status(500).json({ message : err.message });
+        } catch (err) {
+            if (err.isJoi) {
+                return res.status(422).json({ message: err.details[0].message });
+            }
+            res.status(500).json({ message: err.message });
+        }
+
+    };
+
+    // 메일 보내기
+    sendMail = async (req, res) => {
+        const { name, email } = req.body; // 보낼 이메일 주소, 이메일 제목, 이메일 본문, 받는 사람 이름
+
+        await this.userService.sendMail(name, email);
+        return res.status(200).json({ message: "전송 성공" });
+    };
+
+    // 로그인
+    userLogin = async (req, res, next) => {
+        try {
+            // console.log(req.body)
+            const loginInfo = await userLoginValidation.validateAsync(req.body);
+
+            const { code, message, accessToken } = await this.userService.userLogin(loginInfo);
+
+            res.cookie('accessToken', accessToken);
+            return res.status(code).json({ message: message, accessToken: accessToken || undefined })
+        } catch (error) {
+            return res.status(500).json({ errorMessage: error })
+        };
+    };
+
+    // 로그아웃
+    userLogout = (req, res, next) => {
+        res.clearCookie('accessToken');
+        return res.status(200).json({ message: '로그아웃 성공' });
+    };
+
+    // 마이페이지
+    userMypage = async (req, res) => {
+        await this.userService.myPage()
     }
 
-  };
-
-  // 메일 보내기
-  sendMail = async ( req, res ) => {
-    const { name, email } = req.body; // 보낼 이메일 주소, 이메일 제목, 이메일 본문, 받는 사람 이름
-
-    await this.userService.sendMail(name, email);
-    return res.status(200).json({ message : "전송 성공" });
-  };
-
-  // 로그인
-  userLogin = async ( req, res, next ) => {
-    console.log(req.body)
-    const loginInfo = await userLoginValidation.validateAsync(req.body);
-
-    const { code, message, accessToken } = await this.userService.userLogin(loginInfo);
-
-    res.cookie('accessToken', accessToken);
-    return res.status(code).json({ message : message, accessToken : accessToken || undefined });
-  };
-
-  // 로그아웃
-  userLogout = ( req, res, next ) => {
-    res.clearCookie('accessToken');
-    return res.status(200).json({ message : '로그아웃 성공' });
-  };
-
-  // 마이페이지
-  userMypage = async (req,res) => {
-    await this.userService.myPage()
-  }
-
+    callCartProductName = async (req, res) => {
+        try {
+            const { id } = res.locals.user;
+            const productName = await this.userService.getCartProductName(id)
+            return res.status(200).json({ message: '상품을 불러왔습니다.', productName });
+        } catch (error) {
+            return res.status(500).json({ errorMessage: error })
+        }
+    }
 }
 
 module.exports = UserController;
