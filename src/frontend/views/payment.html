@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>Document</title>
+        <!-- jQuery -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <!-- iamport.payment.js -->
+        <script
+            type="text/javascript"
+            src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"
+        ></script>
+        <!-- axios -->
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+            function requestPay() {
+                const amount = document.getElementById('amount').value;
+
+                const IMP = window.IMP; // 생략 가능
+                IMP.init('imp86085022'); // Example: imp00000000
+                IMP.request_pay(
+                    {
+                        // param
+                        pg: 'kakaopay',
+                        pay_method: 'card',
+                        name: '인프런 수강권',
+                        amount: amount,
+                        buyer_email: 'gildong@gmail.com',
+                        buyer_name: '홍길동',
+                        buyer_tel: '010-4242-4242',
+                        buyer_addr: '서울특별시 강남구 신사동',
+                        buyer_postcode: '12345',
+                    },
+                    async function (rsp) {
+                        console.log('rsp', rsp);
+                        if (rsp.success) {
+                            // 결제 성공 시 로직,
+                            const data = await axios
+                                .post(
+                                    'http://localhost:3000/users/payment',
+                                    {
+                                        impUid: rsp.imp_uid,
+                                        amount,
+                                        // merchant_uid: rsp.merchant_uid,
+                                    },
+                                    'post',
+                                    { 'Content-Type': 'application/json' }
+                                )
+                                .then((data) => {
+                                    console.log(data);
+                                    alert('결제에 성공했습니다!!');
+                                })
+                                .catch((error) => {
+                                    console.log(error);
+                                    alert('에러발생!');
+                                });
+                        } else {
+                            // 결제 실패 시 로직,
+                            alert(`결제에 실패했습니다!! 에러 내용: ${rsp.error_msg}`);
+                        }
+                    }
+                );
+            }
+        </script>
+    </head>
+    <body>
+        결제할금액: <input type="text" id="amount" />
+        <button onclick="requestPay()">결제하기</button>
+    </body>
+</html>

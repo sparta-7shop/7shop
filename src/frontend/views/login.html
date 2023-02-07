@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Document</title>
+        <script src="../public/js/login.js"></script>
+    </head>
+    <link rel="stylesheet" href="/css/login.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <body>
+        <div class="form-structor">
+            <div class="signup">
+                <h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
+                <div class="form-holder">
+                    <input type="text" class="input" id="name" placeholder="Name" />
+                    <input type="email" class="input" id="email_signup" placeholder="Email" />
+                    <input type="text" class="input" id="CN" placeholder="인증번호" />
+                    <input
+                        type="password"
+                        class="input"
+                        id="password_signup"
+                        placeholder="Password"
+                    />
+                    <input type="password" class="input" id="confirmPw" placeholder="Confirm" />
+                    <input type="text" class="input" id="phone" placeholder="phone" />
+                </div>
+                <button class="submit-btn" onclick="signup()">Sign up</button>
+            </div>
+            <div class="login slide-up">
+                <div class="center">
+                    <h2 class="form-title" id="login"><span>or</span>Log in</h2>
+                    <div class="form-holder">
+                        <input type="email" class="input" id="email" placeholder="Email" />
+                        <input type="password" id="password" class="input" placeholder="Password" />
+                    </div>
+                    <button class="submit-btn" onclick="login()">Log in</button>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="/js/login.js"></script>
+</html>
