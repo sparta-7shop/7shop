@@ -74,14 +74,14 @@ function showProductDetail(productId) {
         })
 }
 function minus() {
-    var val = $('#var-value').html();
+    let val = $('#var-value').html();
     val = val == '1' ? val : val - 1;
     $('#var-value').html(val);
     $('#product-quanity').val(val);
     return false;
 }
 function plus() {
-    var val = $('#var-value').html();
+    let val = $('#var-value').html();
     val++;
     $('#var-value').html(val);
     $('#product-quanity').val(val);
@@ -94,10 +94,8 @@ function addCart() {
             { prodId: productId, count: count })
         .then((res) => {
             alert(res.data.message)
-            console.log(res);
         })
         .catch((error) => {
-            console.log(error);
             alert(error.response.data.errorMessage)
         })
 }

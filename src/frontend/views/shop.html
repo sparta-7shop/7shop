@@ -388,6 +388,21 @@
         <script src="/js/bootstrap.bundle.min.js"></script>
         <script src="/js/templatemo.js"></script>
         <script src="/js/custom.js"></script>
+        <script>
+            function logout() {
+                axios
+                    .get('http://localhost:3000/users/logout', {})
+                    .then((res) => {
+                        // 응답처리
+                        alert(res.data.message);
+                        window.location.href = '/';
+                    })
+                    .catch((error) => {
+                        // 예외처리
+                        alert(error.response?.data?.message);
+                    });
+            }
+        </script>
         <!-- End Script -->
     </body>
 </html>
