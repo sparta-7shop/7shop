@@ -21,10 +21,10 @@ class ProductRepository {
         }
     }
 
-    getProduct = async (prodId) => {
+    getProduct = async (productId) => {
         try {
             const products = await this.productModel.findOne({
-                where: { id: prodId }
+                where: { id: productId }
             })
             return products
         } catch (error) {

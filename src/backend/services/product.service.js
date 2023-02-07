@@ -1,7 +1,6 @@
 const ProductRepository = require('../repositories/product.repository')
 const { Products, Carts, Orders, Users } = require('../db')
 const UserRepository = require("../repositories/user.repository");
-const {del} = require("express/lib/application");
 
 class ProductService {
     constructor(productService) {
@@ -10,7 +9,19 @@ class ProductService {
     productRepository = new ProductRepository(Products)
 
     getProducts = async () => {
-        return await this.productRepository.getProducts()
+        try {
+            return await this.productRepository.getProducts()
+        } catch (error) {
+            return { errorMessage: error }
+        }
+    }
+
+    getProduct = async (productId) => {
+        try {
+            return await this.productRepository.getProduct(productId)
+        } catch (error) {
+            return { errorMessage: error }
+        }
     }
 }
 

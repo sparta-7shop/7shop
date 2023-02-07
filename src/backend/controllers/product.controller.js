@@ -9,8 +9,23 @@ class ProductController {
     productService = new ProductService(Products)
 
     getProducts = async (req, res) => {
-        const productList = await this.productService.getProducts();
-        return res.json({ productList })
+        try {
+            const productList = await this.productService.getProducts();
+            return res.json({ productList })
+        } catch (error) {
+            return res.json({ errorMessage: error })
+        }
+    }
+
+    getProduct = async (req, res) => {
+        const { productId } = req.params
+        try {
+            const product = await this.productService.getProduct(productId)
+            return res.json({ product })
+
+        } catch (error) {
+
+        }
     }
 }
 
