@@ -139,7 +139,7 @@ class AdminService {
     const userInfo = await this.userRepository.userInfo();
 
     userInfo.sort((a,b)=> {
-      return b.createdAt - a.createdAt
+      return b.id - a.id
     })
 
     return userInfo.map(info => {

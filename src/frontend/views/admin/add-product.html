@@ -75,8 +75,8 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="accounts.html">
-                <i class="far fa-user"></i> Accounts
+              <a class="nav-link" href="users.html">
+                <i class="far fa-user"></i> Users
               </a>
             </li>
             <li class="nav-item dropdown">
@@ -109,6 +109,7 @@
         </div>
       </div>
     </nav>
+<!--    display 시작-->
     <div class="container tm-mt-big tm-mb-big">
       <div class="row">
         <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
@@ -118,13 +119,14 @@
                 <h2 class="tm-block-title d-inline-block">Add Product</h2>
               </div>
             </div>
+
             <div class="row tm-edit-product-row">
               <div class="col-xl-6 col-lg-6 col-md-12">
-                <form action="" class="tm-edit-product-form">
+                <form action="" class="tm-edit-product-form" >
                   <div class="form-group mb-3">
                     <label
-                      for="name"
-                      >Product Name
+                      for="name" id="productName"
+                      >상품 이름
                     </label>
                     <input
                       id="name"
@@ -136,8 +138,8 @@
                   </div>
                   <div class="form-group mb-3">
                     <label
-                      for="description"
-                      >Description</label
+                      for="description" id="productDesc"
+                      >설명</label
                     >
                     <textarea
                       class="form-control validate"
@@ -148,11 +150,11 @@
                   <div class="form-group mb-3">
                     <label
                       for="category"
-                      >Category</label
+                      >카테고리</label
                     >
                     <select
                       class="custom-select tm-select-accounts"
-                      id="category"
+                      id="productCategory"
                     >
                       <option selected>Select category</option>
                       <option value="1">New Arrival</option>
@@ -163,8 +165,8 @@
                   <div class="row">
                       <div class="form-group mb-3 col-xs-12 col-sm-6">
                           <label
-                            for="expire_date"
-                            >Expire Date
+                            for="expire_date" id="description"
+                            >만료 날짜
                           </label>
                           <input
                             id="expire_date"
@@ -176,8 +178,8 @@
                         </div>
                         <div class="form-group mb-3 col-xs-12 col-sm-6">
                           <label
-                            for="stock"
-                            >Units In Stock
+                            for="stock" id="productStock"
+                            >수량
                           </label>
                           <input
                             id="stock"
@@ -186,10 +188,23 @@
                             class="form-control validate"
                             required
                           />
+                          <label
+                            for="stock" id="productPrice"
+                            >가격
+                          </label>
+                          <input
+                            id="price"
+                            name="stock"
+                            type="text"
+                            class="form-control validate"
+                            required
+                          />
                         </div>
                   </div>
-                  
+                </form>
               </div>
+
+
               <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
                 <div class="tm-product-img-dummy mx-auto">
                   <i
@@ -197,18 +212,20 @@
                     onclick="document.getElementById('fileInput').click();"
                   ></i>
                 </div>
+
                 <div class="custom-file mt-3 mb-3">
                   <input id="fileInput" type="file" style="display:none;" />
                   <input
                     type="button"
+                    id="productImage"
                     class="btn btn-primary btn-block mx-auto"
-                    value="UPLOAD PRODUCT IMAGE"
-                    onclick="document.getElementById('fileInput').click();"
+                    value="이미지 업로드"
+                     onclick="document.getElementById('fileInput').click();"
                   />
                 </div>
               </div>
               <div class="col-12">
-                <button type="submit" class="btn btn-primary btn-block text-uppercase">Add Product Now</button>
+                <button type="submit" class="btn btn-primary btn-block text-uppercase" onclick="createProduct()">Add Product Now</button>
               </div>
             </form>
             </div>
@@ -232,6 +249,8 @@
     <!-- https://jqueryui.com/download/ -->
     <script src="/admin/js/bootstrap.min.js"></script>
     <!-- https://getbootstrap.com/ -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/admin/js/addProduct.js"></script>
     <script>
       $(function() {
         $("#expire_date").datepicker();

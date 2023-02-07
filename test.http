@@ -41,7 +41,20 @@ Content-Type: application/json
   "email": "ms_sh0728@naver.com"
 }
 
-
 ### 상품
 GET localhost:3000/admin/userInfo
 Content-Type: application/json
+
+
+### 상품
+GET localhost:3000/products/list
+Content-Type: application/json
+
+
+### 유저 삭제
+POST localhost:3000/admin/users/2
+Content-Type: application/json
+
+### 상품등록
+POST localhost:3000/admin/product
+Content-Type: multipart/form-data
