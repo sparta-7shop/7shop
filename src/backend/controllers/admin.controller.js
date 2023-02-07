@@ -13,7 +13,7 @@ class AdminController {
   */
   deleteUser = async (req, res) => {
     try {
-    console.log('in');
+      console.log('in');
       const { userId } = req.params;
 
       const user = await this.adminService.deleteUser(userId);
@@ -77,10 +77,9 @@ class AdminController {
    * 상품등록(controller)
    */
   createProduct = async (req, res) => {
-    const { name, price, stock, description } = req.body
+    const { name, price, stock, description, categoryId } = req.body
     const productImage = req.file
     const adminId = 1
-    const categoryId = 1
     try {
       const product = await this.productService.createProduct({
         name,
@@ -103,17 +102,17 @@ class AdminController {
   }
 
   // 유저 정보
-  userInfo = async(req, res) => {
+  userInfo = async (req, res) => {
     try {
-    const userInfo = await this.adminService.userInfo()
-    console.log(userInfo);
-    return res.status(200).json({userInfo})
+      const userInfo = await this.adminService.userInfo()
+      console.log(userInfo);
+      return res.status(200).json({ userInfo })
 
-    }catch ( e ) {
+    } catch (e) {
       console.error(e);
 
     }
-}
+  }
 
 
 }

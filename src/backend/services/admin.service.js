@@ -119,6 +119,7 @@ class AdminService {
         }
       }
       /* -----기타 예외처리-----*/
+
       if (!name || !price || !stock || !description) {
         return {
           code: 412,
@@ -138,17 +139,17 @@ class AdminService {
   userInfo = async () => {
     const userInfo = await this.userRepository.userInfo();
 
-    userInfo.sort((a,b)=> {
+    userInfo.sort((a, b) => {
       return b.id - a.id
     })
 
     return userInfo.map(info => {
       return {
-        no : info.id,
-        name : info.name,
+        no: info.id,
+        name: info.name,
         email: info.email,
         phone: info.phone,
-        createdAt : info.createdAt
+        createdAt: info.createdAt
       }
     })
 
