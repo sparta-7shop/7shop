@@ -7,6 +7,7 @@ function getUserCart() {
     axios
         .get(`/users/products`)
         .then((response) => {
+
             let total_price = 0
             for (let i = 0; i < response.data.productName.length; i++) {
                 const product = response.data.productName[i]
@@ -16,7 +17,7 @@ function getUserCart() {
                 total_price += response.data.productName[i].Product.price
 
                 let temp_html = `
-                <input type="hidden" id="total_price" value="${total_price}"/>
+                <input type="hidden" id="totalPrice" value="${total_price}"/>
                     <div class="Cart-Items">
                     <div class="image-box">
                     <h3>${productId}</h3>
@@ -39,14 +40,17 @@ function getUserCart() {
 
                 $('#container').append(temp_html);
             }
+            $('#price').append(`
+            <p>총 결제 금액:${total_price}원</p>
+            <input type="hidden" id="amount" value=${total_price}>
+            `)
         }).catch((err) => {
             console.log(err)
         })
 }
 //  iamport 
 function requestPay() {
-    const amount = parseInt(document.getElementById('total_price').value);
-    console.log('amount', typeof amount)
+    const amount = parseInt(document.getElementById('amount').value);
 
     const IMP = window.IMP; // 생략 가능
     IMP.init('imp86085022'); // Example: imp00000000
