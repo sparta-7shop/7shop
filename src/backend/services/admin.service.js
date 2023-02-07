@@ -1,5 +1,5 @@
 const AdminRepository = require("../repositories/admin.repository");
-const { Admin, Users, Products } = require("../db/index");
+const { Admin, Users, Products, Orders } = require("../db/index");
 
 class AdminService {
   constructor(adminService) {
@@ -8,6 +8,7 @@ class AdminService {
   adminRepository = new AdminRepository(Admin);
   userRepository = new AdminRepository(Users);
   productRepository = new AdminRepository(Products);
+  ordersRepository = new AdminRepository(Orders)
 
   /**
     * 회원삭제(service)
@@ -154,8 +155,17 @@ class AdminService {
         createdAt: info.createdAt
       }
     })
-
   }
+
+  userOrder = async () => {
+    const userOrder = await this.ordersRepository.userOrder();
+
+    // userOrder.sort((a,b)=>{
+    //   return b.id - a.id
+    // })
+  return userOrder
+  }
+
 }
 
 module.exports = AdminService;

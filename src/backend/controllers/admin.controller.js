@@ -113,6 +113,10 @@ class AdminController {
     }
   }
 
+  // 구매 정보
+  userOrder = async () => {
+    return await this.adminService.userOrder();
+  };
 
 }
 module.exports = AdminController;
