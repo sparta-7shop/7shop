@@ -1,6 +1,6 @@
 const express = require("express");
 const UserController = require('../controllers/user.controller');
-const { Users, Address, Payments } = require('../db')
+const { Users, Address, Payments } = require('../db');
 
 const addressController = new UserController(Address)
 const paymentController = new UserController(Payments)
@@ -33,12 +33,14 @@ router.post('/users/cart/detail', authMiddle, userController.deleteCartItem);
 router.post('/users/cart/detail/:prodId', authMiddle, userController.updateCartItemQuantity)
 
 
+// 결제부분 로그인정보 업데이트 필요(프론트 하면서 같이 할 예정)
 //결제
 router.post('/users/payment', paymentController.payment)
 //결제 취소
 router.post('/users/payment/cancel', paymentController.cancelPayment)
+
 //주소 입력
-router.post('/users/address', addressController.postAddress);
+router.post('/users/address', authMiddle, addressController.postAddress);
 //주소 불러오기
-router.get('/users/address/:userId', addressController.getAddress)
+router.get('/users/address', authMiddle, addressController.getAddress)
 module.exports = router;

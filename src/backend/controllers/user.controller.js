@@ -23,18 +23,19 @@ class UserController {
     postAddress = async (req, res) => {
         try {
             const { addressName } = req.body
-            const userId = 1
-            const address = await this.addressService.postAddress(addressName, userId)
+            const { id } = res.locals.user
+            const address = await this.addressService.postAddress(addressName, id)
+            if (address.errorMessage) { return res.status(500).json({ errorMessage: address.errorMessage }) }
             return res.json({ message: '주소 등록이 완료되었습니다!', address: address.name })
         } catch (error) {
-            return res.status(500).json({ errorMessage: error.errorMessage })
+            return res.status(500).json({ errorMessage: error })
         }
     }
 
     getAddress = async (req, res) => {
-        const { userId } = req.params
+        const { id } = res.locals.user
         try {
-            const address = await this.addressService.getAddress({ userId })
+            const address = await this.addressService.getAddress({ id })
             if (address.errorMessage) { return res.json({ errorMessage: address.errorMessage }) }
             return res.json({ address })
         } catch (error) {

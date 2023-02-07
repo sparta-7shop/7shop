@@ -75,20 +75,20 @@ class UserRepository {
     }
 
     /* -------------주소-----------------------------*/
-    postAddress = async (addressName, userId) => {
+    postAddress = async (addressName, id) => {
         try {
-            const address = await this.userModel.create({ name: addressName, user_id: userId })
+            const address = await this.userModel.create({ name: addressName, user_id: id })
             return address
         } catch (error) {
             return { errorMessage: error }
         }
     }
 
-    getAddress = async ({ userId }) => {
+    getAddress = async ({ id }) => {
         try {
             const address = await this.userModel.findAll(
                 {
-                    where: { user_id: userId }
+                    where: { user_id: id }
                 }
             )
             return address

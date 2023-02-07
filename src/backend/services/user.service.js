@@ -25,17 +25,21 @@ class UserService {
     productRepository = new ProductRepository(Products)
 
     /* -------------주소-----------------------------*/
-    postAddress = async (addressName, userId) => {
+    postAddress = async (addressName, id) => {
         try {
-            return await this.addressRepository.postAddress(addressName, userId)
+            const address = await this.addressRepository.postAddress(addressName, id)
+            if (address.errorMessage) {
+                return { errorMessage: '이미 존재하는 주소거나 다른 오류입니다' }
+            }
+            return address
         } catch (error) {
             return { errorMessage: error }
         }
     }
 
-    getAddress = async ({ userId }) => {
+    getAddress = async ({ id }) => {
         try {
-            const Alladdress = await this.addressRepository.getAddress({ userId })
+            const Alladdress = await this.addressRepository.getAddress({ id })
             if (Alladdress.length < 1) { return { errorMessage: '주소가 존재하지 않습니다' } }
             const addressName = Alladdress.map((address) => {
                 return { addressName: address.name }
