@@ -15,10 +15,12 @@ class AdminService {
   deleteUser = async (userId) => {
     try {
       const existUser = await this.userRepository.findUser(userId)
-      if (existUser) {
-        return { code: 409, errorMessage: '이미 삭제한 회원입니다.' }
+      if (existUser?.destroyTime) {
+        return { code: 412, errorMessage: '이미 삭제한 회원입니다.' }
       }
-
+      if (existUser === null) {
+        return { code: 412, errorMessage: '존재하지 않는 회원입니다.' }
+      }
       const deleteUser = await this.userRepository.deleteUser(userId);
       return deleteUser;
     } catch (error) {

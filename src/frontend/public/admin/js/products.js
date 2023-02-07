@@ -1,15 +1,13 @@
 $(document).ready(function () {
 	showProducts();
-	deleteProducts();
 });
-require('../../uploads/');
 
 function showProducts() {
 	axios.get('/products/list')
-		.then(( res ) => {
+		.then((res) => {
 			const rows = res.data.productList;
 			console.log("res.data.productList", rows);
-			for ( let i = 0; i < rows.length; i++ ) {
+			for (let i = 0; i < rows.length; i++) {
 				const no = rows[i].id;
 				const name = rows[i].name;
 				const price = rows[i].price;
@@ -23,14 +21,14 @@ function showProducts() {
 				let temp_html = `
 				<tr>
           <th scope="row"><input type="checkbox" /></th>
-          <td class="tm-product-name" id="productId">${ no }</td>
-          <td>${ name }</td>
-          <td><img src="../../uploads/${ img_path }" width="50" height="50"/></td>
-          <td>${ price }</td>
-          <td>${ stock }</td>
-          <td>${ createdAt }</td>
+          <td class="tm-product-name" id="productId">${no}</td>
+          <td>${name}</td>
+          <td><img src="../../uploads/${img_path}" width="50" height="50"/></td>
+          <td>${price}</td>
+          <td>${stock}</td>
+          <td>${createdAt}</td>
           <td>
-            <a href="#" class="tm-product-delete-link" onclick="deleteProducts()">
+            <a href="#" class="tm-product-delete-link" onclick="deleteProducts(${no})">
               <i class="far fa-trash-alt tm-product-delete-icon"></i>
             </a>
           </td>
@@ -39,16 +37,14 @@ function showProducts() {
 				$('#productList').append(temp_html);
 			}
 		})
-		.catch(( err ) => {
+		.catch((err) => {
 			console.error(err);
 		});
 }
 
 // 상품 삭제
-function deleteProducts() {
-	const no = document.getElementById('productId').innerText;
-	console.log(no);
-	axios.post(`/admin/product/${ no }`)
+function deleteProducts(no) {
+	axios.post(`/admin/product/${no}`)
 		.then(res => {
 			console.log(res);
 			alert(res.data.message);

@@ -1,15 +1,14 @@
 $(document).ready(function () {
 	showUserInfo();
-	deleteUser();
 });
 
 // 회원 목록
 function showUserInfo() {
 	axios.get('/admin/userInfo')
-		.then(( res ) => {
+		.then((res) => {
 			const rows = res.data.userInfo;
 			console.log("res.data.userInfo", res.data.userInfo);
-			for ( let i = 0; i < rows.length; i++ ) {
+			for (let i = 0; i < rows.length; i++) {
 				const no = rows[i].no;
 				const name = rows[i].name;
 				const email = rows[i].email;
@@ -19,13 +18,13 @@ function showUserInfo() {
 				let temp_html = `
          <tr>
             <th scope="row"><input type="checkbox" /></th>
-            <td class="tm-product-name" id="userId">${ no }</td>
-            <td>${ name }</td>
-            <td>${ email }</td>
-            <td>${ phone }</td>
-            <td>${ createdAt }</td>
+            <td class="tm-product-name" name="userId" id="userId">${no}</td>
+            <td>${name}</td>
+            <td>${email}</td>
+            <td>${phone}</td>
+            <td>${createdAt}</td>
             <td>
-              <a href="#" class="tm-product-delete-link" onclick="deleteUser()">
+              <a href="#" class="tm-product-delete-link" onclick="deleteUser(${no})">
                 <i class="far fa-trash-alt tm-product-delete-icon"></i>
               </a>
             </td>
@@ -34,16 +33,17 @@ function showUserInfo() {
 				$('#userlist').append(temp_html);
 			}
 		})
-		.catch(( err ) => {
+		.catch((err) => {
 			console.error(err);
 		});
 }
 
 // 회원 삭제
-function deleteUser() {
-	const no = document.getElementById('userId').innerText;
-	console.log('no',no);
-	axios.post(`/admin/users/${ no }`)
+function deleteUser(no) {
+	// const no = document.getElementById('userId')?.innerText;
+	// const no = document.getElementsByName('userId');
+	// console.log('no', no[0].innerText);
+	axios.post(`/admin/users/${no}`)
 		.then(res => {
 			console.log(res);
 			alert(res.data.message);
