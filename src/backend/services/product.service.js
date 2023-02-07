@@ -23,6 +23,21 @@ class ProductService {
             return { errorMessage: error }
         }
     }
+
+    getProductsByCategory1 = async () => {
+        try {
+            return await this.productRepository.getProductsByCategory1()
+        } catch (error) {
+            return { errorMessage: error }
+        }
+    }
+    getProductsByCategory2 = async () => {
+        try {
+            return await this.productRepository.getProductsByCategory2()
+        } catch (error) {
+            return { errorMessage: error }
+        }
+    }
 }
 
 module.exports = ProductService

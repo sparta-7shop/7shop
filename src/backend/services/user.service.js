@@ -207,8 +207,7 @@ class UserService {
 
         } catch (err) {
             console.log(err)
-            return { code: 500, message: "예상치못한 오류 입니다." };
-
+            return { code: 500, errorMessage: err };
         }
     };
 

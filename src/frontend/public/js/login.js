@@ -42,7 +42,7 @@ function login() {
         })
         .catch((error) => {
             // 예외처리
-            alert(error.response?.data?.message);
+            alert(error.response?.data?.message || error.response.data.errorMessage.details[0].message);
         });
 }
 
@@ -65,6 +65,6 @@ function signup() {
         })
         .catch((error) => {
             // 예외처리
-            alert(error.response?.data?.message);
+            alert(error.response?.data?.message || error.response.data.messge);
         });
 }

@@ -214,13 +214,17 @@ class UserController {
 
     // 로그인
     userLogin = async (req, res, next) => {
-        // console.log(req.body)
-        const loginInfo = await userLoginValidation.validateAsync(req.body);
+        try {
+            // console.log(req.body)
+            const loginInfo = await userLoginValidation.validateAsync(req.body);
 
-        const { code, message, accessToken } = await this.userService.userLogin(loginInfo);
+            const { code, message, accessToken } = await this.userService.userLogin(loginInfo);
 
-        res.cookie('accessToken', accessToken);
-        return res.status(code).json({ message: message, accessToken: accessToken || undefined });
+            res.cookie('accessToken', accessToken);
+            return res.status(code).json({ message: message, accessToken: accessToken || undefined })
+        } catch (error) {
+            return res.status(500).json({ errorMessage: error })
+        };
     };
 
     // 로그아웃

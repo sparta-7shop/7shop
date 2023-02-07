@@ -31,6 +31,26 @@ class ProductRepository {
             console.log(error);
         }
     }
+    getProductsByCategory1 = async () => {
+        try {
+            const products = await this.productModel.findAll({
+                where: { category_Id: 1 }
+            })
+            return products
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    getProductsByCategory2 = async () => {
+        try {
+            const products = await this.productModel.findAll({
+                where: { category_Id: 2 }
+            })
+            return products
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     decrementStock = async ({ count, transaction }) => {
         try {

@@ -27,6 +27,24 @@ class ProductController {
 
         }
     }
+
+    getProductsByCategory1 = async (req, res) => {
+        try {
+            const productList = await this.productService.getProductsByCategory1();
+            return res.json({ productList })
+        } catch (error) {
+            return res.json({ errorMessage: error })
+        }
+    }
+    getProductsByCategory2 = async (req, res) => {
+        try {
+            const productList = await this.productService.getProductsByCategory2();
+            return res.json({ productList })
+        } catch (error) {
+            return res.json({ errorMessage: error })
+        }
+    }
+
 }
 
 module.exports = ProductController
