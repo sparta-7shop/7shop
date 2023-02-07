@@ -197,7 +197,7 @@ class UserController {
 
         } catch (err) {
             if (err.isJoi) {
-                return res.status(422).json({ messge: err.details[0].message });
+                return res.status(422).json({ message: err.details[0].message });
             }
             res.status(500).json({ message: err.message });
         }

@@ -65,6 +65,6 @@ function signup() {
         })
         .catch((error) => {
             // 예외처리
-            alert(error.response?.data?.message || error.response.data.messge);
+            alert(error.response?.data?.message);
         });
 }
