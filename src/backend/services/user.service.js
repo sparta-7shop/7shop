@@ -219,13 +219,13 @@ class UserService {
 
 
     /* -------------결제-----------------------------*/
-    orderProduct = async ({ count, addressName, userId, paymentId, transaction }) => {
+    orderProduct = async ({ count, addressName, id, paymentId, transaction }) => {
         try {
             // product 재고 업데이트
             await this.productRepository.decrementStock({ count, transaction })
             // 카트 상태 업데이트
-            await this.cartRepository.updateCartStatus({ userId })
-            return await this.orderRepository.orderProduct({ addressName, userId, paymentId, transaction })
+            await this.cartRepository.updateCartStatus({ id })
+            return await this.orderRepository.orderProduct({ addressName, id, paymentId, transaction })
         } catch (error) {
             console.log(error)
             return { errorMessage: error }
@@ -286,7 +286,6 @@ class UserService {
     getCartProductName = async (id) => {
         try {
             const getCartProduct = await this.cartRepository.getCartProductName(id)
-            console.log("프로덕트ID", getCartProduct)
             return getCartProduct
         } catch (error) {
             console.log(error)

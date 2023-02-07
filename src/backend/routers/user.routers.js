@@ -35,7 +35,7 @@ router.get('/users/products', authMiddle, userController.callCartProductName)
 
 // 결제부분 로그인정보 업데이트 필요(프론트 하면서 같이 할 예정)
 //결제
-router.post('/users/payment', paymentController.payment)
+router.post('/users/payment', authMiddle, paymentController.payment)
 //결제 취소
 router.post('/users/payment/cancel', paymentController.cancelPayment)
 

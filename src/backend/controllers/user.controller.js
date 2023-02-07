@@ -43,15 +43,17 @@ class UserController {
         }
     }
 
-    order = async ({ req, res, paymentId, transaction }) => {
+    order = async ({ req, res, paymentId, transaction, addressName }) => {
         try {
-            const userId = 2
+            // const id = 3 // 지금은 하드코딩
+            const { id } = res.locals.user
 
-            const { count } = req.body
-            const address = await this.addressService.getAddress({ userId })
-            const addressName = address[0].addressName // 프론트에서 받아오는 address로 바꿔줘야함 -> body에 담아와야할듯
+            const { count, addressName } = req.body
+            // const address = await this.addressService.getAddress({ id })
+            // const addressName = address[0].addressName // 프론트에서 받아오는 address로 바꿔줘야함 -> body에 담아와야할듯
+            // const addressName = addressName
 
-            await this.orderService.orderProduct({ count, addressName, userId, paymentId, transaction })
+            await this.orderService.orderProduct({ count, addressName, id, paymentId, transaction })
             return res.status(201).json({ message: '주문이 완료되었습니다.' })
         } catch (error) {
             console.log(error);
@@ -60,7 +62,7 @@ class UserController {
     }
 
     payment = async (req, res) => {
-        const { impUid, amount } = req.body
+        const { impUid, amount, addressName } = req.body
         try {
             // 1. 아임포트에 요청해서 결제 완료 기록 존재하는지 확인
             const token = await this.iamportService.getToken()
@@ -75,7 +77,7 @@ class UserController {
             const paymentId = payment.dataValues.id // payment 아이디
 
             // 3.order DB에 저장
-            await this.order({ req, res, paymentId, transaction })
+            await this.order({ req, res, paymentId, transaction, addressName })
 
             await transaction.commit()
         } catch (error) {

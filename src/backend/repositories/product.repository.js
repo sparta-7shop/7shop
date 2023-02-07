@@ -56,10 +56,11 @@ class ProductRepository {
         try {
             await this.productModel.update(
                 { stock: Sequelize.literal(`stock-${2}`) }, // body안에 count받아와야함(현재는 하드코딩)
-                { where: { id: [3, 4] } }, // product ID 어디서 받아오지?
+                { where: { id: [17] } }, // product ID 어디서 받아오지?
                 { transaction }
             )
         } catch (error) {
+            return { errorMessage: error }
             console.log(error);
         }
     }
@@ -71,6 +72,7 @@ class ProductRepository {
                 { transaction }
             )
         } catch (error) {
+            return { errorMessage: error }
             console.log(error);
         }
     }

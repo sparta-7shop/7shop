@@ -48,11 +48,11 @@ class UserRepository {
             console.log(error)
         }
     }
-    updateCartStatus = async ({ userId }) => {
+    updateCartStatus = async ({ id }) => {
         try {
             return await this.userModel.update(
                 { status: 1 },
-                { where: { user_id: userId } }
+                { where: { user_id: id } }
             )
         } catch (error) {
             console.log(error);
@@ -99,10 +99,10 @@ class UserRepository {
     }
 
     /* -------------결제-----------------------------*/
-    orderProduct = async ({ addressName, userId, paymentId, transaction }) => {
+    orderProduct = async ({ addressName, id, paymentId, transaction }) => {
         try {
             return await this.userModel.create(
-                { address: addressName, user_id: userId, payment_id: paymentId },
+                { address: addressName, user_id: id, payment_id: paymentId },
                 { transaction })
         } catch (error) {
             console.log(error);
@@ -166,6 +166,7 @@ class UserRepository {
                 }
             )
         } catch (error) {
+            return { errorMessage: error }
             console.log(error);
         }
     }
@@ -198,11 +199,12 @@ class UserRepository {
                 where: { user_id: id },
                 include: [{
                     model: Products,
-                    attributes: ["name", "img_path"],
+                    attributes: ["id", "name", "img_path", "price"],
                 }]
             })
             return getCartProduct;
         } catch (error) {
+            return { errorMessage: error }
             console.log(error);
         }
     }
