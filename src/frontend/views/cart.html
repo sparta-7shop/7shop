@@ -28,7 +28,14 @@
 
             <hr />
             <div class="checkout"></div>
-            결제할금액: <input type="text" id="amount" />
+            <br />
+            <div class="form-group mb-3" id="address">
+                <label for="category">주소</label>
+                <select class="custom-select tm-select-accounts" id="productCategory">
+                    <option selected>Select address</option>
+                </select>
+            </div>
+            <br />
             <button class="button" onclick="requestPay()">결제하기</button>
         </div>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

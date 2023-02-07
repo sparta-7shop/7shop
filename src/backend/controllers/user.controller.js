@@ -43,15 +43,12 @@ class UserController {
         }
     }
 
-    order = async ({ req, res, paymentId, transaction, addressName }) => {
+    order = async ({ req, res, paymentId, transaction }) => {
         try {
             // const id = 3 // 지금은 하드코딩
             const { id } = res.locals.user
 
             const { count, addressName } = req.body
-            // const address = await this.addressService.getAddress({ id })
-            // const addressName = address[0].addressName // 프론트에서 받아오는 address로 바꿔줘야함 -> body에 담아와야할듯
-            // const addressName = addressName
 
             await this.orderService.orderProduct({ count, addressName, id, paymentId, transaction })
             return res.status(201).json({ message: '주문이 완료되었습니다.' })

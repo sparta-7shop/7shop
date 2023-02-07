@@ -1,5 +1,6 @@
 $(document).ready(function () {
     getUserCart();
+    getAddress()
 });
 
 function getUserCart() {
@@ -65,13 +66,14 @@ function requestPay() {
         async function (rsp) {
             if (rsp.success) {
                 // 결제 성공 시 로직,
+                const address = $("#productCategory option:checked").text()
                 axios
                     .post(
                         'http://localhost:3000/users/payment',
                         {
                             impUid: rsp.imp_uid,
                             amount,
-                            addressName: '주소테스트'
+                            addressName: address
                         },
                         'post',
                         { 'Content-Type': 'application/json' }
@@ -90,4 +92,22 @@ function requestPay() {
             }
         }
     );
+}
+
+function getAddress() {
+    axios
+        .get('/users/address')
+        .then((res) => {
+            let rows = res.data.address
+            for (i in rows) {
+                let address = rows[i].addressName
+                let address_html = `
+                <option value="1">${address}</option>
+                    `
+                $('#productCategory').append(address_html)
+            }
+        })
+        .catch((error) => {
+            console.log('error', error)
+        })
 }
