@@ -70,6 +70,7 @@ function showProduct() {
                 let stock = rows[i].stock
                 let image = rows[i].img_path
                 let desc = rows[i].description
+                let productId = rows[i].id
                 let product = `
                 <div class="col-md-4">
                 <div class="card mb-4 product-wap rounded-0">
@@ -85,7 +86,7 @@ function showProduct() {
                             <li>
                                 <a
                                     class="btn btn-success text-white"
-                                    href="shop-single.html"
+                                    href="/product?id=${productId}"
                                     ><i class="far fa-heart"></i
                                 ></a>
                             </li>
