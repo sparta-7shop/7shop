@@ -46,6 +46,24 @@ function login() {
         });
 }
 
+function sendMail() {
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email_signup').value;
+    console.log(name,email);
+       axios
+        .post('http://localhost:3000/users/sendMail',
+            { name: name, email: email }
+        )
+        .then((res) => {
+            // 응답처리
+            alert(res.data.message)
+        })
+        .catch((error) => {
+            // 예외처리
+            alert(error.response?.data?.message);
+        });
+}
+
 function signup() {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email_signup').value;
