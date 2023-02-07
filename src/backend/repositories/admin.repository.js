@@ -103,6 +103,11 @@ class AdminRepository {
       return { errorMessage: error }
     }
   }
+
+  // 유저 목록
+  userInfo = async () => {
+    return await this.adminModel.findAll()
+  }
 }
 
 module.exports = AdminRepository;
