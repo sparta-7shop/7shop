@@ -115,10 +115,17 @@ class AdminRepository {
 	// 오더 정보 가져오기
 	userOrder = async () => {
 		const getUserOrder = await this.adminModel.findAll({
-			include : [{
-				model : Users,
-				attributes : [ "name", "phone" ],
-			}]
+		include: [
+      {
+         model: Users,
+         attributes: ['name', 'phone'],
+      },
+      {
+         model: Payments,
+         attributes: ['total_price'],
+      },
+   ],
+				raw:true
 		});
 		console.log(getUserOrder);
 		return getUserOrder
