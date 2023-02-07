@@ -100,5 +100,20 @@ class AdminController {
       });
     }
   }
+
+  // 유저 정보
+  userInfo = async(req, res) => {
+    try {
+    const userInfo = await this.adminService.userInfo()
+    console.log(userInfo);
+    return res.status(200).json({userInfo})
+
+    }catch ( e ) {
+      console.error(e);
+
+    }
+}
+
+
 }
 module.exports = AdminController;

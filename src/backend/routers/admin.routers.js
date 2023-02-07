@@ -16,5 +16,8 @@ router.put("/admin/product/:productId", multerUpload, adminController.updateProd
 router.post("/admin/product/:productId", adminController.deleteProduct);
 //상품 등록(관리자)
 router.post('/admin/product', multerUpload, adminController.createProduct)
+//회원 목록
+router.get('/admin/userInfo', adminController.userInfo)
+
 
 module.exports = router;

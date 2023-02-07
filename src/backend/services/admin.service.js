@@ -133,6 +133,26 @@ class AdminService {
       return { errorMessage: error }
     }
   }
+
+  // 유저 목록
+  userInfo = async () => {
+    const userInfo = await this.userRepository.userInfo();
+
+    userInfo.sort((a,b)=> {
+      return b.createdAt - a.createdAt
+    })
+
+    return userInfo.map(info => {
+      return {
+        no : info.id,
+        name : info.name,
+        email: info.email,
+        phone: info.phone,
+        createdAt : info.createdAt
+      }
+    })
+
+  }
 }
 
 module.exports = AdminService;

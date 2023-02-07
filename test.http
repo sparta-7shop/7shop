@@ -11,7 +11,7 @@ Content-Type: application/json
 {
   "name": "성민섭",
   "email": "ms_sh0728@naver.com",
-  "emailConfirm": "4079",
+  "emailConfirm": "1520",
   "password": "1234",
   "passwordConfirm": "1234",
   "phone": "01012341234"
@@ -40,3 +40,8 @@ Content-Type: application/json
   "name": "테스트입니당",
   "email": "ms_sh0728@naver.com"
 }
+
+
+### 상품
+GET localhost:3000/admin/userInfo
+Content-Type: application/json
