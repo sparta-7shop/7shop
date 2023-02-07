@@ -67,7 +67,7 @@ class UserService {
                 return { code: 412, errorMessage: "유저를 찾을 수 없습니다." }
             }
             const product = await this.productRepository.getProduct(prodId)
-            const stock = product.dataValues.stock
+            const stock = product?.dataValues.stock
             if (count <= 0) {
                 return { code: 412, errorMessage: "수량은 1보다 작을수 없습니다." }
             }

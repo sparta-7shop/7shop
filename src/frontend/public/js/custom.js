@@ -93,14 +93,14 @@ function showProduct() {
                             <li>
                                 <a
                                     class="btn btn-success text-white mt-2"
-                                    href="shop-single.html"
+                                    href="/product?id=${productId}"
                                     ><i class="far fa-eye"></i
                                 ></a>
                             </li>
                             <li>
                                 <a
                                     class="btn btn-success text-white mt-2"
-                                    href="shop-single.html"
+                                    href="/product?id=${productId}"
                                     ><i class="fas fa-cart-plus"></i
                                 ></a>
                             </li>
@@ -108,12 +108,9 @@ function showProduct() {
                     </div>
                 </div>
                 <div class="card-body">
-                    <a href="shop-single.html" class="h3 text-decoration-none"
+                    <a href="/product?id=${productId}" class="h3 text-decoration-none"
                         >${name}</a
                     >
-                    <ul
-                        class="w-100 list-unstyled d-flex justify-content-between mb-0"
-                    ></ul>
                     <p class="text-center mb-0">${price}원</p>
                 </div>
                 </div>

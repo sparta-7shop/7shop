@@ -112,9 +112,9 @@ class UserController {
     // 토큰값 전달 -> 복호화 -> 전역변수 userId를 불러와 userId를 처리해야함.
     //authmiddleware 에서 걸러지는것들은 다 예외처리 할 필요가 없음.
     getCartItem = async (req, res) => {
-        const { userId } = req.params;
+        const { id } = res.locals.user;
         try {
-            const getUserCart = await this.cartService.getCartItem(userId);
+            const getUserCart = await this.cartService.getCartItem(id);
             if (getUserCart.errorMessage) {
                 return res.status(getUserCart.code).json({ errorMessage: getUserCart.errorMessage })
             }
@@ -136,11 +136,10 @@ class UserController {
     //
     //고민중..
     addCartItem = async (req, res) => {
-        const { userId } = req.params;
         const { prodId, count } = req.body;
-
+        const { id } = res.locals.user;
         try {
-            const addUserCart = await this.cartService.addCartItem(prodId, userId, count);
+            const addUserCart = await this.cartService.addCartItem(prodId, id, count);
             if (addUserCart?.errorMessage) {
                 return res.status(addUserCart.code).json({ errorMessage: addUserCart.errorMessage })
             }
@@ -156,9 +155,10 @@ class UserController {
     }
     updateCartItemQuantity = async (req, res) => {
         try {
-            const { userId, prodId } = req.params;
+            const { prodId } = req.params;
+            const { id } = res.locals.user;
             const { count } = req.body;
-            const updateItemQuantity = await this.cartService.updateCartItemQuantity(userId, prodId, count)
+            const updateItemQuantity = await this.cartService.updateCartItemQuantity(id, prodId, count)
             if (updateItemQuantity?.errorMessage) {
                 return res.status(updateItemQuantity.code).json({ errorMessage: updateItemQuantity.errorMessage })
             }
@@ -171,9 +171,9 @@ class UserController {
 
     deleteCartItem = async (req, res) => {
         try {
-            const { userId } = req.params;
+            const { id } = res.locals.user;
             const { prodId } = req.body;
-            const deleteUserCart = await this.cartService.deleteCartItem(userId, prodId);
+            const deleteUserCart = await this.cartService.deleteCartItem(id, prodId);
             if (deleteUserCart.errorMessage) {
                 return res.status(deleteUserCart.code).json({ errorMessage: deleteUserCart.errorMessage })
             }
