@@ -21,16 +21,16 @@ router.post('/users/sendMail', userController.sendMail);
 router.get('/users/mypage', authMiddle, userController.userMypage);
 
 
-
-
 //장바구니 불러오기
-router.get('/users/cart/', authMiddle, userController.getCartItem);
+router.get('/users/cart', authMiddle, userController.getCartItem);
 // 장바구니 추가
 router.post('/users/cart', authMiddle, userController.addCartItem);
 //장바구니 삭제
 router.post('/users/cart/detail', authMiddle, userController.deleteCartItem);
 //장바구니 수량 수정 (추가)
 router.post('/users/cart/detail/:prodId', authMiddle, userController.updateCartItemQuantity)
+//장바구니 불러올때 쓸거
+router.get('/users/products', authMiddle, userController.callCartProductName)
 
 
 // 결제부분 로그인정보 업데이트 필요(프론트 하면서 같이 할 예정)

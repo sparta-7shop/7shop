@@ -282,6 +282,17 @@ class UserService {
             return { errorMessage: error }
         }
     }
+
+    getCartProductName = async (id) => {
+        try {
+            const getCartProduct = await this.cartRepository.getCartProductName(id)
+            console.log("프로덕트ID", getCartProduct)
+            return getCartProduct
+        } catch (error) {
+            console.log(error)
+            return { errorMessage: error }
+        }
+    }
 }
 
 module.exports = UserService;

@@ -238,6 +238,15 @@ class UserController {
         await this.userService.myPage()
     }
 
+    callCartProductName = async (req, res) => {
+        try {
+            const { id } = res.locals.user;
+            const productName = await this.userService.getCartProductName(id)
+            return res.status(200).json({ message: '상품을 불러왔습니다.', productName });
+        } catch (error) {
+            return res.status(500).json({ errorMessage: error })
+        }
+    }
 }
 
 module.exports = UserController;

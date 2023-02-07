@@ -3,6 +3,7 @@
 //cart Table
 
 const { Sequelize } = require('sequelize');
+const { Products } = require('../db')
 
 //cartId, product_id, user_id, count
 const { Op } = require('sequelize');
@@ -191,6 +192,20 @@ class UserRepository {
 
     }
 
+    getCartProductName = async (id) => {
+        try {
+            const getCartProduct = await this.userModel.findAll({
+                where: { user_id: id },
+                include: [{
+                    model: Products,
+                    attributes: ["name", "img_path"],
+                }]
+            })
+            return getCartProduct;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 }
 
