@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans');
+@font-face {
+    font-family: 'Bazzi';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/Bazzi.woff')
+        format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 html,
+input {
+    font-family: maplestory;
+}
+
 body {
     position: relative;
     min-height: 100vh;
@@ -7,7 +18,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Fira Sans', Helvetica, Arial, sans-serif;
+    font-family: maplestory;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
