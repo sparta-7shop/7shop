@@ -35,11 +35,17 @@ function showProductDetail(productId) {
                                 <h6>Description : ${product.description}</h6>
                                 <p>남은 수량 : ${product.stock}개</p>
                                 <div class="num">
-                                <div class="updown">
-                                    <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="1">
-                                    <span><i class="fas fa-arrow-alt-circle-up up"></i></span>
-                                    <span><i class="fas fa-arrow-alt-circle-down down"></i></span>
-                                </div>
+                                <div class="col-auto">
+                                        <ul class="list-inline pb-3">
+                                            <li class="list-inline-item text-right">
+                                                Quantity
+                                                <input type="hidden" name="product-quanity" id="product-quanity" value="1">
+                                            </li>
+                                            <li class="list-inline-item"><span class="btn btn-success" id="btn-minus" onclick="minus()">-</span></li>
+                                            <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
+                                            <li class="list-inline-item"><span class="btn btn-success" id="btn-plus" onclick="plus()">+</span></li>
+                                        </ul>
+                                    </div>
                                 </div>
                                     <div class="row pb-3">
                                         <div class="col d-grid">
@@ -61,13 +67,28 @@ function showProductDetail(productId) {
             </div>
             `
             $('#product_detail').append(product_html);
+
         })
         .catch((error) => {
             console.log(error);
         })
 }
+function minus() {
+    var val = $('#var-value').html();
+    val = val == '1' ? val : val - 1;
+    $('#var-value').html(val);
+    $('#product-quanity').val(val);
+    return false;
+}
+function plus() {
+    var val = $('#var-value').html();
+    val++;
+    $('#var-value').html(val);
+    $('#product-quanity').val(val);
+    return false;
+}
 function addCart() {
-    const count = document.getElementById('p_num1').value
+    const count = document.getElementById('product-quanity').value
     axios
         .post(`/users/cart`,
             { prodId: productId, count: count })
