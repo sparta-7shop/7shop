@@ -1,4 +1,4 @@
-('use strict');
+'use strict';
 const { Model } = require('sequelize');
 
 /**
@@ -28,11 +28,18 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
+            status: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: 0
+            },
         },
         {
             sequelize,
             modelName: 'Carts',
-            timestamps: true
+            timestamps: true,
+            paranoid: true,
+            deletedAt: 'destroyTime'
         }
     );
     return Carts;

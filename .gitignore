@@ -3,6 +3,7 @@
 
 ### Node ###
 # Logs
+.idea
 logs
 *.log
 npm-debug.log*
@@ -10,6 +11,9 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
+.vscode
+
+src/frontend/public/uploads
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

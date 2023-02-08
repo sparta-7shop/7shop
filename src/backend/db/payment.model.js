@@ -1,4 +1,4 @@
-('use strict');
+'use strict';
 const { Model } = require('sequelize');
 
 /**
@@ -22,16 +22,17 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            status: {
-                type: DataTypes.BOOLEAN,
-                allowNull: false,
-            },
-
+            impUid: {
+                type: DataTypes.STRING,
+                allowNull: false
+            }
         },
         {
             sequelize,
             modelName: 'Payments',
-            timestamps: true
+            timestamps: true,
+            paranoid: true,
+            deletedAt: 'destroyTime'
         }
     );
     return Payments;

@@ -1,4 +1,4 @@
-('use strict');
+'use strict';
 const { Model } = require('sequelize');
 
 /**
@@ -19,10 +19,6 @@ module.exports = (sequelize, DataTypes) => {
             });
             models.Products.belongsTo(models.Admin, {
                 foreignKey: { name: 'admin_id', allowNull: false },
-                sourceKey: 'id',
-            });
-            models.Products.hasMany(models.OrdersProducts, {
-                foreignKey: { name: 'product_id', allowNull: false },
                 sourceKey: 'id',
             });
         }
@@ -55,7 +51,9 @@ module.exports = (sequelize, DataTypes) => {
         {
             sequelize,
             modelName: 'Products',
-            timestamps: true
+            timestamps: true,
+            paranoid: true,
+            deletedAt: 'destroyTime'
         }
     );
     return Products;

@@ -1,9 +1,11 @@
+
+const path = require('path')
 require('dotenv').config();
 const env = process.env;
 
 const development = {
     username: env.SEQUELIZE_DEV_USERNAME || 'root',
-    password: env.SEQUELIZE_DEV_PASSWORD || '0000',
+    password: env.SEQUELIZE_DEV_PASSWORD || '3d720307',
     database: env.SEQUELIZE_DEV_DATABASE || '7shop',
     host: env.SEQUELIZE_DEV_HOST || '127.0.0.1',
     dialect: env.SEQUELIZE_DEV_DIALECT || 'mysql',
@@ -26,13 +28,5 @@ const production = {
     dialect: 'mysql',
 };
 
-// const jwtConfig = {
-//     secretKey: env.JWT_SECRETKEY || 'cleaning',
-//     option: {
-//         algorithm: env.JWT_ALGORITHM || 'HS256',
-//         expiresIn: env.JWT_EXPIRESIN || '60m',
-//     },
-// };
 
-// export default { development, test, production, jwtConfig };
 module.exports = { development, test, production }

@@ -1,4 +1,4 @@
-('use strict');
+'use strict';
 const { Model } = require('sequelize');
 
 /**
@@ -12,10 +12,6 @@ module.exports = (sequelize, DataTypes) => {
             models.Orders.belongsTo(models.Users, {
                 foreignKey: { name: 'user_id', allowNull: false },
                 targetKey: 'id',
-            });
-            models.Orders.hasMany(models.OrdersProducts, {
-                foreignKey: { name: 'order_id', allowNull: false },
-                sourceKey: 'id',
             });
             models.Orders.belongsTo(models.Payments, {
                 foreignKey: { name: 'payment_id', allowNull: false },
@@ -40,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         {
             sequelize,
             modelName: 'Orders',
-            timestamps: true
+            timestamps: true,
         }
     );
     return Orders;
