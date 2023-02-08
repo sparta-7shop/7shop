@@ -8,12 +8,13 @@ function getUserCart() {
     axios
         .get(`/users/products`)
         .then((response) => {
+            console.log('response', response)
 
             let total_price = 0
             for (let i = 0; i < response.data.productName.length; i++) {
                 const product = response.data.productName[i]
                 const productImageUrl = response.data.productName[i].Product.img_path
-                const productId = response.data.productName[i].Product.id
+                const productId = response.data.productName[i].id
                 const count = response.data.productName[i].count
                 const price = response.data.productName[i].Product.price
                 total_price += response.data.productName[i].Product.price
@@ -39,6 +40,9 @@ function getUserCart() {
                         <input type="number" class="list-inline-item" min="1" value="${count}" style="width:50px"></input>
                         </ul>
                     </div>
+                    <a class="tm-product-delete-link" onclick="deleteCart(${productId})">
+    <i class="far fa-trash-alt tm-product-delete-icon"></i>
+</a>
                     </div>
                     </div>
                 `
@@ -145,4 +149,16 @@ function getUserInfo() {
         .catch((error) => {
             console.log('error', error)
         })
+}
+function deleteCart(productId) {
+    axios
+        .post(`/users/cart/${productId}`)
+        .then((res) => {
+            console.log('res', res)
+            alert('삭제완료')
+        })
+        .catch((error) => {
+            console.log('error', error)
+        })
+
 }

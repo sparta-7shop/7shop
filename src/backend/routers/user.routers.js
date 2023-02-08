@@ -26,7 +26,7 @@ router.get('/users/cart', authMiddle, userController.getCartItem);
 // 장바구니 추가
 router.post('/users/cart', authMiddle, userController.addCartItem);
 //장바구니 삭제
-router.post('/users/cart/detail', authMiddle, userController.deleteCartItem);
+router.post('/users/cart/:prodId', authMiddle, userController.deleteCartItem);
 //장바구니 수량 수정 (추가)
 router.post('/users/cart/detail/:prodId', authMiddle, userController.updateCartItemQuantity)
 //장바구니 불러올때 쓸거

@@ -172,8 +172,8 @@ class UserController {
     deleteCartItem = async (req, res) => {
         try {
             const { id } = res.locals.user;
-            const { prodId } = req.body;
-            const deleteUserCart = await this.cartService.deleteCartItem(id, prodId);
+            const prodId = req.params;
+            const deleteUserCart = await this.cartService.deleteCartItem(id, parseInt(prodId));
             if (deleteUserCart.errorMessage) {
                 return res.status(deleteUserCart.code).json({ errorMessage: deleteUserCart.errorMessage })
             }

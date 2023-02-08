@@ -61,15 +61,15 @@ class UserRepository {
 
 
     //쿠팡의 경우 cartitemIds[], itemStatus를 페이로드에 넣어 구분함
-    deleteCartItem = async (userId, prodId) => {
+    deleteCartItem = async (id, prodId) => {
+
         try {
             return await this.userModel.destroy(
                 {
-                    where: { user_id: userId, product_id: prodId }
+                    where: { user_id: id, product_id: prodId }
                 },
-                {
-                    truncate: true
-                })
+                // { truncate: true },
+            )
         } catch (error) {
             console.log(error);
         }

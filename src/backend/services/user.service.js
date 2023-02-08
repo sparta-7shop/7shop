@@ -107,13 +107,13 @@ class UserService {
     }
 
     /*----------  deleteCartItem: 카트에서 상품을 하나 제거합니다.  ----------*/
-    deleteCartItem = async (userId, prodId) => {
+    deleteCartItem = async (id, prodId) => {
         try {
-            const product = await this.productRepository.getProduct(prodId)
-            if (!product) {
-                return { code: 412, errorMessage: "해당 제품이 존재하지 않습니다." }
-            }
-            return await this.cartRepository.deleteCartItem(userId, prodId)
+            // const product = await this.productRepository.getProduct(prodId)
+            // if (!product) {
+            //     return { code: 412, errorMessage: "해당 제품이 존재하지 않습니다." }
+            // }
+            return await this.cartRepository.deleteCartItem(id, prodId)
         } catch (error) {
             console.log(error)
             return { errorMessage: error }
