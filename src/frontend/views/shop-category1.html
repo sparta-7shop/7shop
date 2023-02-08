@@ -18,6 +18,7 @@
             href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap"
         />
         <link rel="stylesheet" href="/css/fontawesome.min.css" />
+        <script src="../public/js/category1.js"></script>
         <!--
 
     TemplateMo 559 Zay Shop
@@ -241,27 +242,26 @@
                             <div class="d-flex"></div>
                         </div>
                     </div>
-
+                    <div id="paginated-list" data-current-page="1" aria-live="polite">
+                        <div class="row" class="product_list" id="product_list"></div>
+                    </div>
+                    <div class="pagination pagination-lg justify-content-end">
+                        <nav class="pagination-container">
+                            <button class="pagination-button" id="prev-button" title="Previous page" aria-label="Previous page">
+                                &lt;
+                            </button>
+                            <div id="pagination-numbers">
+                            </div>
+                            <button class="pagination-button" id="next-button" title="Next page" aria-label="Next page">
+                                &gt;
+                            </button>
+                        </nav>
+                    </div>
             </div>
         </div>
         </div>
         <!-- End Content -->
-        <div id="paginated-list" data-current-page="1" aria-live="polite">
-            <div class="row" class="product_list" id="product_list"></div>
-        </div>
-        <div>경계입니다</div>
-        <div class="pagination pagination-lg justify-content-end">
-            <nav class="pagination-container">
-                <button class="pagination-button" id="prev-button" title="Previous page" aria-label="Previous page">
-                    &lt;
-                </button>
-                <div id="pagination-numbers">
-                </div>
-                <button class="pagination-button" id="next-button" title="Next page" aria-label="Next page">
-                    &gt;
-                </button>
-            </nav>
-        </div>
+
 
         <!-- Start Footer -->
         <footer class="bg-dark" id="tempaltemo_footer">
@@ -377,8 +377,8 @@
         <script src="/js/jquery-migrate-1.2.1.min.js"></script>
         <script src="/js/bootstrap.bundle.min.js"></script>
         <script src="/js/templatemo.js"></script>
-        <script src="/js/category1.js"></script>
         <script src="/js/paginate.js"></script>
+        <script src="/js/category1.js"></script>
         <script>
             function logout() {
                 axios
@@ -396,6 +396,8 @@
 
 
         </script>
+
+
         <!-- End Script -->
     </body>
 </html>

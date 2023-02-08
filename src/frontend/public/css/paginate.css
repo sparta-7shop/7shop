@@ -10,7 +10,8 @@
 .pagination-number,
 .pagination-button{
     font-size: 1.1rem;
-    background-color: yellow;
+    color: #FFFFFF;
+    background-color: #69bb7e;
     border: none;
     margin: 0.25rem 0.25rem;
     cursor: pointer;
@@ -27,4 +28,8 @@
 .pagination-number.active {
     color: #fff;
     background: #0085b6;
+}
+
+.hidden {
+    display: none;
 }
