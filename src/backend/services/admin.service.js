@@ -154,8 +154,15 @@ class AdminService {
         createdAt: info.createdAt
       }
     })
-
+  }
+  userById = async (id) => {
+    try {
+      return await this.userRepository.userById(id)
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
+
 
 module.exports = AdminService;

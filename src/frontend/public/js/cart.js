@@ -1,6 +1,7 @@
 $(document).ready(function () {
     getUserCart();
     getAddress()
+    getUserInfo()
 });
 
 function getUserCart() {
@@ -19,8 +20,8 @@ function getUserCart() {
                 let temp_html = `
                 <input type="hidden" id="totalPrice" value="${total_price}"/>
                     <div class="Cart-Items">
+                    <div>${productId}</div>
                     <div class="image-box">
-                    <h3>${productId}</h3>
                         <img src="/uploads/${productImageUrl}" style="width: 150px"/>
                     </div>
                     <div class="about">
@@ -83,8 +84,8 @@ function requestPay() {
                         { 'Content-Type': 'application/json' }
                     )
                     .then((data) => {
-                        console.log(data);
                         alert('결제에 성공했습니다!!');
+                        window.location.href = "/"
                     })
                     .catch((error) => {
                         console.log(error);
@@ -110,6 +111,32 @@ function getAddress() {
                     `
                 $('#productCategory').append(address_html)
             }
+        })
+        .catch((error) => {
+            console.log('error', error)
+        })
+}
+
+function getUserInfo() {
+    axios
+        .get('/admin/user')
+        .then((res) => {
+            console.log('res', res.data)
+            const name = res.data.name
+            const email = res.data.email
+            const phone = res.data.phone
+
+
+            let user_info = `
+            <section>
+                <h2>구매자 정보</h2>
+                <p>이름:${name}</p>
+                <p>이메일:${email}</p>
+                <p>휴대폰 번호:${phone}</p>
+            </section>
+            `
+            $('#userInfo').append(user_info)
+
         })
         .catch((error) => {
             console.log('error', error)

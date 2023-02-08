@@ -112,6 +112,15 @@ class AdminController {
 
     }
   }
+  userById = async (req, res) => {
+    try {
+      const { id } = res.locals.user
+      const user = await this.adminService.userById(id)
+      return res.status(200).json(user)
+    } catch (error) {
+      return res.status(500).json({ errorMessage: error })
+    }
+  }
 
 
 }
