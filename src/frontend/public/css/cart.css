@@ -179,6 +179,18 @@ hr {
 .address {
     margin-right: 9%;
     display: flex;
-    justify-content: right;
+    justify-content: center;
+    align-items: center;
+}
+.userInfo {
+    margin-right: 9%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.price {
+    margin-right: 9%;
+    display: flex;
+    justify-content: center;
     align-items: center;
 }

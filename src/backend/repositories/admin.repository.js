@@ -108,6 +108,16 @@ class AdminRepository {
   userInfo = async () => {
     return await this.adminModel.findAll()
   }
+  userById = async (id) => {
+    try {
+      return await this.adminModel.findOne({
+        where: { id }
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
+
 
 module.exports = AdminRepository;
