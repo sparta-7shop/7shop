@@ -121,7 +121,7 @@ function getUserInfo() {
     axios
         .get('/admin/user')
         .then((res) => {
-            console.log('res', res.data)
+            console.log('res', res)
             const name = res.data.name
             const email = res.data.email
             const phone = res.data.phone

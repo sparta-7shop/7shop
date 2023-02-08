@@ -14,12 +14,13 @@ class ProductService {
 
             const product = productInfo.map(info => {
                 return {
-                    id : info.id,
-                    name : info.name,
-                    price : info.price,
-                    stock : info.stock,
-                    img_path : info.img_path,
-                    createdAt : info.createdAt.toLocaleString()
+                    id: info.id,
+                    name: info.name,
+                    price: info.price,
+                    stock: info.stock,
+                    description: info.description,
+                    img_path: info.img_path,
+                    createdAt: info.createdAt.toLocaleString()
                 }
             })
             return product
