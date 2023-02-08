@@ -19,8 +19,8 @@ function getUserCart() {
                 let temp_html = `
                 <input type="hidden" id="totalPrice" value="${total_price}"/>
                     <div class="Cart-Items">
+                    <div>${productId}</div>
                     <div class="image-box">
-                    <h3>${productId}</h3>
                         <img src="/uploads/${productImageUrl}" style="width: 150px"/>
                     </div>
                     <div class="about">
@@ -41,7 +41,7 @@ function getUserCart() {
                 $('#container').append(temp_html);
             }
             $('#price').append(`
-            <p>총 결제 금액:${total_price}원</p>
+            <p class="address">총 결제 금액:${total_price}원</p>
             <input type="hidden" id="amount" value=${total_price}>
             `)
         }).catch((err) => {
@@ -83,8 +83,8 @@ function requestPay() {
                         { 'Content-Type': 'application/json' }
                     )
                     .then((data) => {
-                        console.log(data);
                         alert('결제에 성공했습니다!!');
+                        window.location.href = "/"
                     })
                     .catch((error) => {
                         console.log(error);
