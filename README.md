@@ -25,6 +25,7 @@ Team 7
 
 사용된 기술
 ---
+
   <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"> <img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white">
   
   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/Axsios-5A29E4?style=for-the-badge&logo=axsios&logoColor=white"> <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
@@ -33,10 +34,12 @@ Team 7
   
   <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 
+
 <br>
 
 ✅ 다이어그램
 ---
+
 <br>
 메인페이지<br>
 <img src="https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F17a3d752-0d49-44e2-97fa-6bb459ddbfe4%2FUntitled.png?id=61cda46b-530a-4258-a18b-0e134b2edfd3&table=block&spaceId=469240fb-3871-42f8-9b6a-c82a7d3441bc&width=1870&userId=77a63536-521c-4e7e-907a-32a6504ed56d&cache=v2" width="600px" height="500px">
@@ -162,3 +165,13 @@ ERD
 
 asdf
 ---
+
+
+[👉 다이어그램보기 ](https://app.diagrams.net/#G1GgADD8YIv-5R5zAmTM8UJ9e1qSMjTyjr)
+
+<br><br>
+
+✅ ERD
+---
+<img  src="https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fc8ed168b-4076-46b3-acba-b6cca8aea269%2FUntitled.png?id=9f5d4377-4bd2-40fe-8bf5-258f69512357&table=block&spaceId=469240fb-3871-42f8-9b6a-c82a7d3441bc&width=2000&userId=77a63536-521c-4e7e-907a-32a6504ed56d&cache=v2">
+
