@@ -94,6 +94,7 @@ function addCart() {
             { prodId: productId, count: count })
         .then((res) => {
             alert(res.data.message)
+          window.location.href = "/shop.html"
         })
         .catch((error) => {
             alert(error.response.data.errorMessage)
