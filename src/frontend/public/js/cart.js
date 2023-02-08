@@ -15,6 +15,7 @@ function getUserCart() {
                 const productImageUrl = response.data.productName[i].Product.img_path
                 const productId = response.data.productName[i].Product.id
                 const count = response.data.productName[i].count
+                const price = response.data.productName[i].Product.price
                 total_price += response.data.productName[i].Product.price
 
                 let temp_html = `
@@ -26,6 +27,9 @@ function getUserCart() {
                     </div>
                     <div class="about">
                         <h1 class="productName">${product.Product.name}</h1>
+                    </div>
+                    <div class="about">
+                        <h1 class="price">${price}원</h1>
                     </div>
                     <div class="col-auto">
                         <ul class="list-inline pb-3">
