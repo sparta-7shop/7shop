@@ -58,3 +58,7 @@ Content-Type: application/json
 ### 상품등록
 POST localhost:3000/admin/product
 Content-Type: multipart/form-data
+
+### 상품 목록
+GET localhost:3000/admin/userOrder
+Content-Type: application/json

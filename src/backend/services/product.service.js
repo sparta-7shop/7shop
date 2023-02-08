@@ -10,7 +10,20 @@ class ProductService {
 
     getProducts = async () => {
         try {
-            return await this.productRepository.getProducts()
+            const productInfo = await this.productRepository.getProducts()
+
+            const product = productInfo.map(info => {
+                return {
+                    id : info.id,
+                    name : info.name,
+                    price : info.price,
+                    stock : info.stock,
+                    img_path : info.img_path,
+                    createdAt : info.createdAt.toLocaleString()
+                }
+            })
+            return product
+
         } catch (error) {
             return { errorMessage: error }
         }

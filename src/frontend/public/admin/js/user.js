@@ -7,7 +7,7 @@ function showUserInfo() {
 	axios.get('/admin/userInfo')
 		.then(( res ) => {
 			const rows = res.data.userInfo;
-			console.log("res.data.userInfo", res.data.userInfo);
+
 			for ( let i = 0; i < rows.length; i++ ) {
 				const no = rows[i].no;
 				const name = rows[i].name;

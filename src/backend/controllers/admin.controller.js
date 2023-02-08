@@ -122,6 +122,11 @@ class AdminController {
     }
   }
 
+  // 구매 정보
+  userOrder = async (req,res) => {
+    const userOrder = await this.adminService.userOrder();
+    return res.json({ userOrder })
+  };
 
 }
 module.exports = AdminController;

@@ -1,5 +1,5 @@
 const AdminRepository = require("../repositories/admin.repository");
-const { Admin, Users, Products } = require("../db/index");
+const { Admin, Users, Products, Orders } = require("../db/index");
 
 class AdminService {
   constructor(adminService) {
@@ -8,6 +8,7 @@ class AdminService {
   adminRepository = new AdminRepository(Admin);
   userRepository = new AdminRepository(Users);
   productRepository = new AdminRepository(Products);
+  ordersRepository = new AdminRepository(Orders)
 
   /**
     * 회원삭제(service)
@@ -151,10 +152,26 @@ class AdminService {
         name: info.name,
         email: info.email,
         phone: info.phone,
-        createdAt: info.createdAt
+        createdAt: info.createdAt.toLocaleString()
       }
     })
   }
+
+  userOrder = async () => {
+    const userOrder = await this.ordersRepository.userOrder();
+
+    userOrder.sort((a,b)=>{
+      return b.id - a.id
+    })
+
+  return userOrder.map(( order ) => {
+    return {
+      ...order,
+      createdAt : order.createdAt.toLocaleString(),
+
+    }
+  })
+    return userOrder
   userById = async (id) => {
     try {
       return await this.userRepository.userById(id)
@@ -162,6 +179,7 @@ class AdminService {
       console.log(error)
     }
   }
+
 }
 
 

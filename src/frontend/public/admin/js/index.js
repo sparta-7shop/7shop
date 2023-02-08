@@ -1,56 +1,41 @@
 $(document).ready(function () {
-	showUserInfo();
+	showOrderInfo();
 });
 
-// 회원 목록
-function showUserInfo() {
-	axios.get('/admin/userInfo')
-		.then((res) => {
-			const rows = res.data.userInfo;
-			console.log("res.data.userInfo", res.data.userInfo);
-			for (let i = 0; i < rows.length; i++) {
-				const no = rows[i].no;
-				const name = rows[i].name;
-				const email = rows[i].email;
-				const phone = rows[i].phone;
-				const createdAt = rows[i].createdAt;
+function showOrderInfo() {
+	axios.get('/admin/userOrder')
+		.then(( res ) => {
+			const rows = res.data.userOrder;
+			for ( let i = 0; i < rows.length; i++ ) {
+				const id = rows[i].id;
+				const status_num = rows[i].status;
+				const address = rows[i].address;
+				const phone = rows[i]["User.phone"];
+				const createAd = rows[i].createdAt.toLocaleString()
+				const name = rows[i]["User.name"];
+				const total_price_num = rows[i]["Payment.total_price"];
+
+				const status = status_num === 1 ? "구매완료" : "구매대기";
+				const total_price = total_price_num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 
 				let temp_html = `
-         <tr>
-            <th scope="row"><input type="checkbox" /></th>
-            <td class="tm-product-name" name="userId" id="userId">${no}</td>
-            <td>${name}</td>
-            <td>${email}</td>
-            <td>${phone}</td>
-            <td>${createdAt}</td>
-            <td>
-              <a href="#" class="tm-product-delete-link" onclick="deleteUser(${no})">
-                <i class="far fa-trash-alt tm-product-delete-icon"></i>
-              </a>
-            </td>
+				 <tr>
+              <th scope="row"><b>${ id }</b></th>
+              <td>
+                  <div class="tm-status-circle moving">
+                  </div>${ status }
+              </td>
+              <td><b>${ name }</b></td>
+              <td><b>${ address }</b></td>
+              <td><b></b>${ phone }</td>
+              <td>${ total_price } 원</td>
+              <td>${ createAd }</td>
           </tr>
-        `;
-				$('#userlist').append(temp_html);
+				`;
+				$('#productlist').append(temp_html);
 			}
 		})
-		.catch((err) => {
+		.catch(( err ) => {
 			console.error(err);
 		});
 }
-
-// 회원 삭제
-function deleteUser(no) {
-	// const no = document.getElementById('userId')?.innerText;
-	// const no = document.getElementsByName('userId');
-	// console.log('no', no[0].innerText);
-	axios.post(`/admin/users/${no}`)
-		.then(res => {
-			console.log(res);
-			alert(res.data.message);
-		})
-		.catch(err => {
-			console.error(err);
-			alert(err.response.data.errorMessage);
-		});
-}
-
