@@ -19,10 +19,10 @@ function showUserInfo() {
          <tr>
             <th scope="row"><input type="checkbox" /></th>
             <td class="tm-product-name"  id="userId">${ no }</td>
-            <td>${ name }</td>
+            <td width="80px">${ name }</td>
             <td>${ email }</td>
             <td>${ phone }</td>
-            <td>${ createdAt }</td>
+            <td width="90px">${ createdAt }</td>
             <td>
               <a href="#" class="tm-product-delete-link" onclick="deleteUser(${ no })">
                 <i class="far fa-trash-alt tm-product-delete-icon"></i>
