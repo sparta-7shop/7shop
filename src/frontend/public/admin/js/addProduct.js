@@ -24,6 +24,7 @@ function createProduct() {
 		})
 		.then((res) => {
 			alert(res.data.message);
+			window.location.href('/admin')
 		})
 		.catch((error) => {
 			console.error(error);

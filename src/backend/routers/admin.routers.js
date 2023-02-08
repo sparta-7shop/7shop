@@ -18,7 +18,7 @@ router.post("/admin/product/:productId", adminController.deleteProduct);
 router.post('/admin/product', multerUpload, adminController.createProduct)
 //회원 목록
 router.get('/admin/userInfo', adminController.userInfo)
-//상품 목록
+//주문 목록
 router.get('/admin/userOrder', adminController.userOrder)
 
 

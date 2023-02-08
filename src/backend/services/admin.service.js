@@ -152,7 +152,7 @@ class AdminService {
         name: info.name,
         email: info.email,
         phone: info.phone,
-        createdAt: info.createdAt
+        createdAt: info.createdAt.toLocaleString()
       }
     })
   }
@@ -160,10 +160,18 @@ class AdminService {
   userOrder = async () => {
     const userOrder = await this.ordersRepository.userOrder();
 
-    // userOrder.sort((a,b)=>{
-    //   return b.id - a.id
-    // })
-  return userOrder
+    userOrder.sort((a,b)=>{
+      return b.id - a.id
+    })
+
+  return userOrder.map(( order ) => {
+    return {
+      ...order,
+      createdAt : order.createdAt.toLocaleString(),
+
+    }
+  })
+    return userOrder
   }
 
 }

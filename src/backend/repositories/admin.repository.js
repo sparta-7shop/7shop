@@ -127,7 +127,6 @@ class AdminRepository {
    ],
 				raw:true
 		});
-		console.log(getUserOrder);
 		return getUserOrder
 	};
 }
