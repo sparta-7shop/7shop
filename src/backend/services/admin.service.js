@@ -172,8 +172,15 @@ class AdminService {
     }
   })
     return userOrder
+  userById = async (id) => {
+    try {
+      return await this.userRepository.userById(id)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 }
+
 
 module.exports = AdminService;

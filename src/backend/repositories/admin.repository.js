@@ -107,6 +107,7 @@ class AdminRepository {
 		}
 	};
 
+
 	// 유저 목록
 	userInfo = async () => {
 		return await this.adminModel.findAll();
@@ -130,6 +131,7 @@ class AdminRepository {
 		return getUserOrder
 	};
 }
+
 
 module.exports = AdminRepository;
 

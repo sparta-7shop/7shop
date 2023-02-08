@@ -3,6 +3,7 @@ const express = require("express");
 const AdminController = require('../controllers/admin.controller');
 const multerUpload = require('../middlewares/multer')
 const { Admin } = require('../db/index')
+const authMiddle = require('../middlewares/auth')
 const adminController = new AdminController(Admin)
 
 
@@ -20,6 +21,9 @@ router.post('/admin/product', multerUpload, adminController.createProduct)
 router.get('/admin/userInfo', adminController.userInfo)
 //주문 목록
 router.get('/admin/userOrder', adminController.userOrder)
+//회원 목록(1명만)
+router.get('/admin/user', authMiddle, adminController.userById)
+
 
 
 module.exports = router;

@@ -1,12 +1,14 @@
 $(document).ready(function () {
     getUserCart();
     getAddress()
+    getUserInfo()
 });
 
 function getUserCart() {
     axios
         .get(`/users/products`)
         .then((response) => {
+
             let total_price = 0
             for (let i = 0; i < response.data.productName.length; i++) {
                 const product = response.data.productName[i]
@@ -16,10 +18,10 @@ function getUserCart() {
                 total_price += response.data.productName[i].Product.price
 
                 let temp_html = `
-                <input type="hidden" id="total_price" value="${total_price}"/>
+                <input type="hidden" id="totalPrice" value="${total_price}"/>
                     <div class="Cart-Items">
+                    <div>${productId}</div>
                     <div class="image-box">
-                    <h3>${productId}</h3>
                         <img src="/uploads/${productImageUrl}" style="width: 150px"/>
                     </div>
                     <div class="about">
@@ -39,14 +41,17 @@ function getUserCart() {
 
                 $('#container').append(temp_html);
             }
+            $('#price').append(`
+            <p>총 결제 금액:${total_price}원</p>
+            <input type="hidden" id="amount" value=${total_price}>
+            `)
         }).catch((err) => {
             console.log(err)
         })
 }
 //  iamport 
 function requestPay() {
-    const amount = parseInt(document.getElementById('total_price').value);
-    console.log('amount', typeof amount)
+    const amount = parseInt(document.getElementById('amount').value);
 
     const IMP = window.IMP; // 생략 가능
     IMP.init('imp86085022'); // Example: imp00000000
@@ -79,8 +84,8 @@ function requestPay() {
                         { 'Content-Type': 'application/json' }
                     )
                     .then((data) => {
-                        console.log(data);
                         alert('결제에 성공했습니다!!');
+                        window.location.href = "/"
                     })
                     .catch((error) => {
                         console.log(error);
@@ -106,6 +111,32 @@ function getAddress() {
                     `
                 $('#productCategory').append(address_html)
             }
+        })
+        .catch((error) => {
+            console.log('error', error)
+        })
+}
+
+function getUserInfo() {
+    axios
+        .get('/admin/user')
+        .then((res) => {
+            console.log('res', res.data)
+            const name = res.data.name
+            const email = res.data.email
+            const phone = res.data.phone
+
+
+            let user_info = `
+            <section>
+                <h2>구매자 정보</h2>
+                <p>이름:${name}</p>
+                <p>이메일:${email}</p>
+                <p>휴대폰 번호:${phone}</p>
+            </section>
+            `
+            $('#userInfo').append(user_info)
+
         })
         .catch((error) => {
             console.log('error', error)

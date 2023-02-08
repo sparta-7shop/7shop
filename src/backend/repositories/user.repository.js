@@ -196,7 +196,7 @@ class UserRepository {
     getCartProductName = async (id) => {
         try {
             const getCartProduct = await this.userModel.findAll({
-                where: { user_id: id },
+                where: { user_id: id, status: 0 },
                 include: [{
                     model: Products,
                     attributes: ["id", "name", "img_path", "price"],

@@ -17,9 +17,9 @@ function showProduct() {
                 let desc = rows[i].description
                 let productId = rows[i].id
                 let product = `
-                <div class="col-md-4">
-                <div class="card mb-4 product-wap rounded-0">
-                <div class="card rounded-0">
+                <div class="col-md-4" id="paginate">
+                <div class="card mb-4 product-wap rounded-0" >
+                <div class="card rounded-0" >
                     <img
                         class="card-img rounded-0 img-fluid"
                         src="/uploads/${image}"
@@ -39,7 +39,7 @@ function showProduct() {
                                 <a
                                     class="btn btn-success text-white mt-2"
                                     href="/product?id=${productId}"
-                                    ><i class="far fa-eye"></i
+                                    ><i class="far fa-eye"></i  
                                 ></a>
                             </li>
                         </ul>
@@ -56,9 +56,7 @@ function showProduct() {
                 `
                 $('#product_list').append(product).trigger('create');
             }
-
-
-
+            createPaginate()
         })
         .catch((error) => {
             console.log(error);

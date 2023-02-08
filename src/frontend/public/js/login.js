@@ -49,8 +49,8 @@ function login() {
 function sendMail() {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email_signup').value;
-    console.log(name,email);
-       axios
+    console.log(name, email);
+    axios
         .post('http://localhost:3000/users/sendMail',
             { name: name, email: email }
         )
