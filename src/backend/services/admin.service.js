@@ -160,27 +160,27 @@ class AdminService {
   userOrder = async () => {
     const userOrder = await this.ordersRepository.userOrder();
 
-    userOrder.sort((a,b)=>{
+    userOrder.sort((a, b) => {
       return b.id - a.id
     })
 
-  return userOrder.map(( order ) => {
-    return {
-      ...order,
-      createdAt : order.createdAt.toLocaleString(),
+    return userOrder.map((order) => {
+      return {
+        ...order,
+        createdAt: order.createdAt.toLocaleString(),
 
-    }
-  })
+      }
+    })
     return userOrder
-  userById = async (id) => {
-    try {
-      return await this.userRepository.userById(id)
-    } catch (error) {
-      console.log(error)
+    userById = async (id) => {
+      try {
+        return await this.userRepository.userById(id)
+      } catch (error) {
+        console.log(error)
+      }
     }
+
   }
-
 }
-
 
 module.exports = AdminService;
