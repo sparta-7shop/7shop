@@ -31,8 +31,6 @@ const Constant = require("./config/Constant");
 const { msgCfg, errCfg, eventCfg } = Constant;
 const users = {};
 ioLogic(io, users);
-//머지 테스트
-// app.set('view engine', 'html');
 
 
 app.use(cookieParser());
@@ -50,9 +48,6 @@ app.use('/', [adminRoutes, productRoutes, userRoutes])
 app.get('/product', (req, res) => {
   res.render('shop-single.html')
 })
-
-
-
 
 sequelize
   .sync({ force: false })
