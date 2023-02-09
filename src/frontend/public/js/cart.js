@@ -62,7 +62,7 @@ function requestPay() {
     const amount = parseInt(document.getElementById('amount').value);
 
     const IMP = window.IMP; // 생략 가능
-    IMP.init('imp86085022'); // Example: imp00000000
+    IMP.init('imp72251076'); // Example: imp00000000
     IMP.request_pay(
         {
             // param
