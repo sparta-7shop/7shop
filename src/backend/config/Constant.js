@@ -1,3 +1,4 @@
+//이슈 #39수정
 const msgCfg= require('./msgcfg');
 const errCfg= require('./errcfg');
 const eventCfg=require('./eventcfg');
