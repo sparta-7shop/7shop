@@ -16,6 +16,7 @@ module.exports = async (req, res, next) => {
 			where: { id, name }
 		})
 		console.log("안녀어어엉", id, name)
+		console.log("또끈", res.locals.user)
 		next()
 
 	} catch (err) {

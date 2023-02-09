@@ -27,7 +27,7 @@ const adminRoutes = require('./routers/admin.routers.js');
 const productRoutes = require('./routers/product.routers.js');
 const userRoutes = require('./routers/user.routers.js')
 const ioLogic = require('./io-logic');
-const Constant = require("./config/Constant");
+const Constant = require("./config/constant");
 const { msgCfg, errCfg, eventCfg } = Constant;
 const users = {};
 ioLogic(io, users);

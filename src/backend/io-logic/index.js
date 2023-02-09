@@ -1,4 +1,4 @@
-const Constant = require("../config/Constant");
+const Constant = require("../config/constant");
 const {msgCfg, errCfg, eventCfg}=Constant;
 // console.log(Cfg)
 const checkAuth = data => {

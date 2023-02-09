@@ -1,6 +1,6 @@
-const msgCfg= require('./msgCfg');
-const errCfg= require('./errCfg');
-const eventCfg=require('./eventCfg');
+const msgCfg= require('./msgcfg');
+const errCfg= require('./errcfg');
+const eventCfg=require('./eventcfg');
 
 module.exports={
 	msgCfg,

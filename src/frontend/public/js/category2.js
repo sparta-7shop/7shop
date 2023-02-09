@@ -17,7 +17,7 @@ function showProduct() {
                 let productId = rows[i].id
                 let product = `
                 <div class="col-md-4" id="paginate">
-                <div class="card mb-4 product-wap rounded-0">
+                <div class="card mb-4 product-wap rounded-0 ">
                 <div class="card rounded-0">
                     <img
                         class="card-img rounded-0 img-fluid"
