@@ -8,7 +8,6 @@ Team 7
 ---
 - [김승일](https://github.com/kingseungil)
 - [우태현](https://github.com/wth2052)
-- [권병석](https://github.com/KwonByungSeok)
 - [성민섭](https://github.com/Seop0728)
 
 
