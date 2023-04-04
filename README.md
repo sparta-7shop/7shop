@@ -41,25 +41,25 @@ Team 7
 
 <br>
 메인페이지<br>
-<img src="https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F17a3d752-0d49-44e2-97fa-6bb459ddbfe4%2FUntitled.png?id=61cda46b-530a-4258-a18b-0e134b2edfd3&table=block&spaceId=469240fb-3871-42f8-9b6a-c82a7d3441bc&width=1870&userId=77a63536-521c-4e7e-907a-32a6504ed56d&cache=v2" width="600px" height="500px">
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F5sWgT%2FbtrYDeUfTv3%2F2hX9ncK3CtaTxYNY2z5Qpk%2Fimg.png" width="600px" height="500px">
 
 장바구니<br>
-<img src="https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F415c88e5-cc9c-4e57-a6ee-e98bbc989613%2FUntitled.png?id=fcea8a36-be50-470b-b3d2-4285c22693e7&table=block&spaceId=469240fb-3871-42f8-9b6a-c82a7d3441bc&width=1420&userId=77a63536-521c-4e7e-907a-32a6504ed56d&cache=v2" width="600px" height="500px">
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FSR4EU%2FbtrYITVS8BA%2FBd92bOmTMjxrVqAhNrC8gK%2Fimg.png" width="600px" height="500px">
 
 상품(shop)<br>
-<img src="https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F3510615a-f000-4354-ae32-59822f0d4f7c%2FUntitled.png?id=4e2cac92-a7b7-4cb3-89ce-5cf3366aace3&table=block&spaceId=469240fb-3871-42f8-9b6a-c82a7d3441bc&width=1640&userId=77a63536-521c-4e7e-907a-32a6504ed56d&cache=v2" width="600px" height="500px">
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F4xwcx%2FbtrYKuOx2pQ%2FkrBC3LLgQ9E43eEoBDKuF0%2Fimg.png" width="600px" height="500px">
 
 마이페이지<br>
 <img src="https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F14f62e9d-0e5d-40cd-9003-363609ad9ff1%2FUntitled.png?id=100a4633-ebfa-4c50-8cf4-6b6d7e0f1613&table=block&spaceId=469240fb-3871-42f8-9b6a-c82a7d3441bc&width=1590&userId=77a63536-521c-4e7e-907a-32a6504ed56d&cache=v2" width="600px" height="500px">
 
 관리자페이지(회원관리)<br>
-<img src="https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F47d97216-9f2c-4647-9c7e-f17e61eb2eed%2FUntitled.png?id=cdb0a3da-6944-4d60-b669-b9dc03642bd4&table=block&spaceId=469240fb-3871-42f8-9b6a-c82a7d3441bc&width=1660&userId=77a63536-521c-4e7e-907a-32a6504ed56d&cache=v2" width="600px" height="500px">
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdimzAf%2FbtrYJZ9b9eI%2FXsk5H6fVSBzfYZ6UFOh7s0%2Fimg.png" width="600px" height="500px">
 
 관리자페이지(상품관리)<br>
-<img src="https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F957e1921-8e29-455b-8167-ac32ca074669%2FUntitled.png?id=d27713a0-8c31-4300-9bbd-6ca78238bf9f&table=block&spaceId=469240fb-3871-42f8-9b6a-c82a7d3441bc&width=2000&userId=77a63536-521c-4e7e-907a-32a6504ed56d&cache=v2" width="600px" height="500px">
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FJxzVm%2FbtrYEj2tdgY%2Fe2orhahYWsaaIlyUcgBmM0%2Fimg.png" width="600px" height="500px">
 
 로그인/회원가입<br>
-<img src="https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F1f144967-e45e-4dc6-81ce-4a96ed815a55%2FUntitled.png?id=a9416a2a-3867-4e00-9ad8-4d3cdf02f59e&table=block&spaceId=469240fb-3871-42f8-9b6a-c82a7d3441bc&width=2000&userId=77a63536-521c-4e7e-907a-32a6504ed56d&cache=v2" width="600px" height="500px">
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FBQtVm%2FbtrYByeHnr0%2FSVePrmpreDUKJN39pHTk21%2Fimg.png" width="600px" height="500px">
 
 
 
@@ -156,7 +156,7 @@ DB 설계
 
 ERD
 ---
-<img src="https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F6c248921-f080-4749-bc81-d5efc558d5d9%2FUntitled.png?id=08d9d574-06cd-4dac-ace4-2c1124e97346&table=block&spaceId=469240fb-3871-42f8-9b6a-c82a7d3441bc&width=2000&userId=77a63536-521c-4e7e-907a-32a6504ed56d&cache=v2" width="600px" height="500px">
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FczIHli%2FbtrYI6npWRK%2F5ySpJMWhxw1oKaSQxJXUNK%2Fimg.png" width="600px" height="500px">
 
 
 
